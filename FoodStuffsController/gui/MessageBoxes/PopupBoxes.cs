@@ -10,7 +10,7 @@ namespace FoodStuffsController.gui.MessageBoxes
     {
         public static void ShowError(string error = "Error.", string message = "An unexpected error has occured.")
         {
-            MessageBox.Show(error, message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, error, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
 

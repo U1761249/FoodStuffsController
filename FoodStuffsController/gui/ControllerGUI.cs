@@ -40,7 +40,9 @@ namespace FoodStuffsController
                 try
                 {
                     double toAdd = Convert.ToDouble(value);
-                    currentBin.addProduct(toAdd);
+                    bool added = currentBin.addProduct(toAdd);
+
+                    if (!added) PopupBoxes.ShowError("Error", "Not enough space in the bin to add " + toAdd);
 
                     updateValues();
                 }
