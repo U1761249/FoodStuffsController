@@ -43,6 +43,7 @@ namespace FoodStuffsController
             this.cbBin = new System.Windows.Forms.ComboBox();
             this.idStock = new System.Windows.Forms.Label();
             this.lblStock = new System.Windows.Forms.Label();
+            this.pbCapacity = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -153,13 +154,15 @@ namespace FoodStuffsController
             this.tableLayoutPanel2.Controls.Add(this.cbBin, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.idStock, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.lblStock, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.pbCapacity, 0, 3);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(161, 125);
+            this.tableLayoutPanel2.RowCount = 4;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.99813F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(161, 149);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // idBin
@@ -174,7 +177,7 @@ namespace FoodStuffsController
             // idProduct
             // 
             this.idProduct.AutoSize = true;
-            this.idProduct.Location = new System.Drawing.Point(3, 41);
+            this.idProduct.Location = new System.Drawing.Point(3, 37);
             this.idProduct.Name = "idProduct";
             this.idProduct.Size = new System.Drawing.Size(60, 20);
             this.idProduct.TabIndex = 2;
@@ -183,7 +186,7 @@ namespace FoodStuffsController
             // lblProduct
             // 
             this.lblProduct.AutoSize = true;
-            this.lblProduct.Location = new System.Drawing.Point(69, 41);
+            this.lblProduct.Location = new System.Drawing.Point(69, 37);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(77, 20);
             this.lblProduct.TabIndex = 3;
@@ -200,7 +203,7 @@ namespace FoodStuffsController
             // idStock
             // 
             this.idStock.AutoSize = true;
-            this.idStock.Location = new System.Drawing.Point(3, 82);
+            this.idStock.Location = new System.Drawing.Point(3, 74);
             this.idStock.Name = "idStock";
             this.idStock.Size = new System.Drawing.Size(45, 20);
             this.idStock.TabIndex = 5;
@@ -209,11 +212,20 @@ namespace FoodStuffsController
             // lblStock
             // 
             this.lblStock.AutoSize = true;
-            this.lblStock.Location = new System.Drawing.Point(69, 82);
+            this.lblStock.Location = new System.Drawing.Point(69, 74);
             this.lblStock.Name = "lblStock";
             this.lblStock.Size = new System.Drawing.Size(62, 20);
             this.lblStock.TabIndex = 6;
             this.lblStock.Text = "lblStock";
+            // 
+            // pbCapacity
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.pbCapacity, 2);
+            this.pbCapacity.Location = new System.Drawing.Point(3, 114);
+            this.pbCapacity.Name = "pbCapacity";
+            this.pbCapacity.Size = new System.Drawing.Size(155, 29);
+            this.pbCapacity.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pbCapacity.TabIndex = 7;
             // 
             // ControllerGUI
             // 
@@ -251,6 +263,7 @@ namespace FoodStuffsController
         private System.Windows.Forms.Label idStock;
         private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.Label lblProduct;
+        private System.Windows.Forms.ProgressBar pbCapacity;
     }
 }
 

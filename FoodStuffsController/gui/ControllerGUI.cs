@@ -29,6 +29,10 @@ namespace FoodStuffsController
         {
             this.lblProduct.Text = currentBin.getProductName();
             this.lblStock.Text = $"{currentBin.getcurrentVolume().ToString()}mᶟ";
+
+            pbCapacity.Maximum = Convert.ToInt32(currentBin.getMaxVolume());
+            pbCapacity.Value = Convert.ToInt32(currentBin.getcurrentVolume());
+
         }
 
         // Action Listeners for the GUI functions.
