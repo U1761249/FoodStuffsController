@@ -17,30 +17,46 @@ namespace FoodStuffsController
 
         FeedBin currentBin;
 
-
+        /// <summary>
+        /// Create a ControllerGUI - the interface used by the bin controller.
+        /// </summary>
         public ControllerGUI()
         {
             InitializeComponent();
+            // currentBin initialised as a test
+            // Will be replaced by the first bin of a shared collection of bins.
             currentBin = new FeedBin(1, "Wheat");
             updateValues();
         }
 
+        /// <summary>
+        /// Update the GUI to display the new information about the currentBin.
+        /// </summary>
         public void updateValues()
         {
+            //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
-            this.lblStock.Text = $"{currentBin.getcurrentVolume().ToString()}mᶟ";
+            this.lblStock.Text = $"{currentBin.getcurrentVolume()}mᶟ";
 
+            // Define the scale and progress of the progress bar to show how full the bin is.
             pbCapacity.Maximum = Convert.ToInt32(currentBin.getMaxVolume());
             pbCapacity.Value = Convert.ToInt32(currentBin.getcurrentVolume());
 
         }
 
         // Action Listeners for the GUI functions.
+
+        /// <summary>
+        /// Add a desired quantity of product to a bin.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             string value = "";
             if (PopupBoxes.InputBox("Quantity to Add", "How much product to add:", ref value) == DialogResult.OK)
             {
+                // Try to convert the input to a double, and add it to the bin.
                 try
                 {
                     double toAdd = Convert.ToDouble(value);
@@ -57,6 +73,11 @@ namespace FoodStuffsController
             }
         }
 
+        /// <summary>
+        /// Remove a specified quantity of product from the bin.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
 
@@ -68,6 +89,7 @@ namespace FoodStuffsController
                     double toRemove = Convert.ToDouble(value);
                     double removed = currentBin.removeProduct(toRemove);
 
+                    // Notify the user if the quantity of product could not be removed.
                     if (removed != toRemove) PopupBoxes.ShowError("Warning", $"Only {removed}mᶟ removed of the desired {toRemove}mᶟ.", MessageBoxIcon.Warning);
 
                     updateValues();
@@ -79,6 +101,11 @@ namespace FoodStuffsController
             }
         }
 
+        /// <summary>
+        /// Empty the current bin, if the user confirms the action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEmpty_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("This will empty the bin. \nContinue?", "Flush bin?", MessageBoxButtons.OKCancel);
