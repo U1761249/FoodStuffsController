@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FoodStuffs_Control_System.src;
+using FoodStuffsController.gui.MessageBoxes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,10 +14,51 @@ namespace FoodStuffsController
 {
     public partial class ControllerGUI : Form
     {
+
+        FeedBin currentBin;
+
+
         public ControllerGUI()
         {
             InitializeComponent();
+            currentBin = new FeedBin(1, "Wheat");
+            updateValues();
         }
 
+        public void updateValues()
+        {
+            this.lblProduct.Text = currentBin.getProductName();
+            this.lblStock.Text = currentBin.getcurrentVolume().ToString();
+        }
+
+        // Action Listeners for the GUI functions.
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            string value = "";
+            if (PopupBoxes.InputBox("Quantity to Add", "How much product to add:", ref value) == DialogResult.OK)
+            {
+                try
+                {
+                    double toAdd = Convert.ToDouble(value);
+                    currentBin.addProduct(toAdd);
+
+                    updateValues();
+                }
+                catch (Exception err)
+                {
+                    PopupBoxes.ShowError("Illegal argument", err.Message);
+                }
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEmpty_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
