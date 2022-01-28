@@ -31,10 +31,10 @@ namespace FoodStuffsController
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnEmpty = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.idBin = new System.Windows.Forms.Label();
@@ -86,6 +86,16 @@ namespace FoodStuffsController
             this.flowLayoutPanel2.Size = new System.Drawing.Size(161, 43);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(3, 3);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(94, 29);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -98,6 +108,16 @@ namespace FoodStuffsController
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(161, 43);
             this.flowLayoutPanel3.TabIndex = 2;
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(3, 3);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(94, 29);
+            this.btnRemove.TabIndex = 0;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // flowLayoutPanel4
             // 
@@ -112,33 +132,13 @@ namespace FoodStuffsController
             this.flowLayoutPanel4.Size = new System.Drawing.Size(161, 46);
             this.flowLayoutPanel4.TabIndex = 3;
             // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(3, 3);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(94, 29);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.Location = new System.Drawing.Point(3, 3);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(94, 29);
-            this.btnRemove.TabIndex = 0;
-            this.btnRemove.Text = "Remove";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
             // btnEmpty
             // 
             this.btnEmpty.Location = new System.Drawing.Point(3, 3);
             this.btnEmpty.Name = "btnEmpty";
             this.btnEmpty.Size = new System.Drawing.Size(94, 29);
             this.btnEmpty.TabIndex = 0;
-            this.btnEmpty.Text = "Empty Bin";
+            this.btnEmpty.Text = "Flush Bin";
             this.btnEmpty.UseVisualStyleBackColor = true;
             this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
             // 

@@ -77,7 +77,12 @@ namespace FoodStuffsController
 
         private void btnEmpty_Click(object sender, EventArgs e)
         {
-
+            DialogResult result = MessageBox.Show("This will empty the bin. \nContinue?", "Flush bin?", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+                currentBin.flush();
+                updateValues();
+            }
         }
     }
 }
