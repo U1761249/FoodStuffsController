@@ -8,9 +8,9 @@ namespace FoodStuffsController.gui.MessageBoxes
 {
     class PopupBoxes
     {
-        public static void ShowError(string error = "Error.", string message = "An unexpected error has occured.")
+        public static void ShowError(string error = "Error.", string message = "An unexpected error has occured.", MessageBoxIcon icon = MessageBoxIcon.Error)
         {
-            MessageBox.Show(message, error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, error, MessageBoxButtons.OK, icon);
         }
 
 

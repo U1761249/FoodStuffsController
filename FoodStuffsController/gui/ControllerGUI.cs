@@ -28,7 +28,7 @@ namespace FoodStuffsController
         public void updateValues()
         {
             this.lblProduct.Text = currentBin.getProductName();
-            this.lblStock.Text = currentBin.getcurrentVolume().ToString();
+            this.lblStock.Text = $"{currentBin.getcurrentVolume().ToString()}mᶟ";
         }
 
         // Action Listeners for the GUI functions.
@@ -42,7 +42,7 @@ namespace FoodStuffsController
                     double toAdd = Convert.ToDouble(value);
                     bool added = currentBin.addProduct(toAdd);
 
-                    if (!added) PopupBoxes.ShowError("Error", "Not enough space in the bin to add " + toAdd);
+                    if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {added}mᶟ.");
 
                     updateValues();
                 }
@@ -56,6 +56,23 @@ namespace FoodStuffsController
         private void btnRemove_Click(object sender, EventArgs e)
         {
 
+            string value = "";
+            if (PopupBoxes.InputBox("Quantity to Remove", "How much product to remove:", ref value) == DialogResult.OK)
+            {
+                try
+                {
+                    double toRemove = Convert.ToDouble(value);
+                    double removed = currentBin.removeProduct(toRemove);
+
+                    if (removed != toRemove) PopupBoxes.ShowError("Warning", $"Only {removed}mᶟ removed of the desired {toRemove}mᶟ.", MessageBoxIcon.Warning);
+
+                    updateValues();
+                }
+                catch (Exception err)
+                {
+                    PopupBoxes.ShowError("Illegal argument", err.Message);
+                }
+            }
         }
 
         private void btnEmpty_Click(object sender, EventArgs e)
