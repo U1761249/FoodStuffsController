@@ -17,5 +17,9 @@ namespace FoodStuffsController
             InitializeComponent();
         }
 
+        private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

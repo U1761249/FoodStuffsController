@@ -1,5 +1,6 @@
 ﻿using FoodStuffs_Control_System.src;
 using FoodStuffsController.gui.MessageBoxes;
+using FoodStuffsController.src;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace FoodStuffsController
 {
     public partial class ControllerGUI : Form
     {
-
+        FeedBinController controller;
         FeedBin currentBin;
 
         /// <summary>
@@ -23,9 +24,12 @@ namespace FoodStuffsController
         public ControllerGUI()
         {
             InitializeComponent();
-            // currentBin initialised as a test
-            // Will be replaced by the first bin of a shared collection of bins.
-            currentBin = new FeedBin(1, "Wheat");
+
+            // Set the currentBin to the first bin in the controller list.
+            controller = FeedBinController.getInstance();
+            currentBin = controller.getBins()[0];
+
+
             updateValues();
         }
 
@@ -36,13 +40,19 @@ namespace FoodStuffsController
         {
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
-            this.lblStock.Text = $"{currentBin.getcurrentVolume()}mᶟ";
+            this.lblStock.Text = $"{currentBin.getCurrentVolume()}mᶟ";
 
             // Define the scale and progress of the progress bar to show how full the bin is.
             pbCapacity.Maximum = Convert.ToInt32(currentBin.getMaxVolume());
-            pbCapacity.Value = Convert.ToInt32(currentBin.getcurrentVolume());
+            pbCapacity.Value = Convert.ToInt32(currentBin.getCurrentVolume());
 
         }
+
+
+
+
+
+
 
         // Action Listeners for the GUI functions.
 
@@ -114,6 +124,16 @@ namespace FoodStuffsController
                 currentBin.flush();
                 updateValues();
             }
+        }
+
+        /// <summary>
+        /// If either form is closed, exit the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ControllerGUI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

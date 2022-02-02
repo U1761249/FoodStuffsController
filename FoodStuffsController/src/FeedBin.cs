@@ -95,6 +95,8 @@ namespace FoodStuffs_Control_System.src
         public int getBinNumber() { return binNumber; }
         public string getProductName() { return productName; }
         public double getMaxVolume() { return maxVolume; }
-        public double getcurrentVolume() { return currentVolume; }
+        public double getCurrentVolume() { return currentVolume; }
+
+        public double getVolumePercentage() { return (maxVolume / 100) * currentVolume; }
     }
 }
