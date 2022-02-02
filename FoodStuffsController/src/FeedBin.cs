@@ -8,12 +8,49 @@ namespace FoodStuffs_Control_System.src
 {
     class FeedBin
     {
+        private bool ignoreUpdateEvent = true;
+        //FeedBin instance properties
+        private int _binNumber;
+        private string _productName;
+        private double _maxVolume;
+        private double _currentVolume;
 
-        //FeedBin instance variables
-        private int binNumber;
-        private string productName;
-        private double maxVolume;
-        private double currentVolume;
+        // Call the VariableChangedEvent whenever a variable changes.
+        private int binNumber { get { return _binNumber; } 
+            set 
+            { 
+                _binNumber = value; 
+                if (!ignoreUpdateEvent)
+                    VariableChangedEvent(this, null); 
+            } 
+        }
+        private string productName { get { return _productName; } 
+            set 
+            { 
+                _productName = value;
+                if (!ignoreUpdateEvent)
+                    VariableChangedEvent(this, null); 
+            } 
+        }
+        private double maxVolume { get { return _maxVolume; } 
+            set 
+            { 
+                _maxVolume = value;
+                if (!ignoreUpdateEvent)
+                    VariableChangedEvent(this, null); 
+            } 
+        }
+        private double currentVolume { get { return _currentVolume; } 
+            set 
+            { 
+                _currentVolume = value;
+                if (!ignoreUpdateEvent)
+                    VariableChangedEvent(this, null); 
+            } 
+        }
+
+        // Event for interfaces to subscribe to. Trigger interface updage when values change.
+        public event EventHandler VariableChangedEvent;
 
         /// <summary>
         /// Constructor for a FeedBin
@@ -27,6 +64,7 @@ namespace FoodStuffs_Control_System.src
             maxVolume = 40.0;           // maximum capacity in cubic metres
             currentVolume = 0.0;        // bin starts in the empty state
 
+            ignoreUpdateEvent = false;  // Start listening to the VariableUpdateEvent after construction.
         }
 
         /// <summary>
@@ -98,5 +136,12 @@ namespace FoodStuffs_Control_System.src
         public double getCurrentVolume() { return currentVolume; }
 
         public double getVolumePercentage() { return (maxVolume / 100) * currentVolume; }
+
+        /// <summary>
+        /// Override the default ToString method.
+        /// </summary>
+        /// <returns></returns>
+        override
+        public string ToString() { return $"Bin {binNumber}: {productName}"; }
     }
 }

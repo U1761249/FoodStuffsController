@@ -38,12 +38,12 @@ namespace FoodStuffsController
             this.btnEmpty = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.idBin = new System.Windows.Forms.Label();
+            this.pbCapacity = new System.Windows.Forms.ProgressBar();
+            this.idStock = new System.Windows.Forms.Label();
+            this.lblStock = new System.Windows.Forms.Label();
             this.idProduct = new System.Windows.Forms.Label();
             this.lblProduct = new System.Windows.Forms.Label();
             this.cbBin = new System.Windows.Forms.ComboBox();
-            this.idStock = new System.Windows.Forms.Label();
-            this.lblStock = new System.Windows.Forms.Label();
-            this.pbCapacity = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -53,9 +53,6 @@ namespace FoodStuffsController
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -63,14 +60,15 @@ namespace FoodStuffsController
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.02041F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.32653F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.32653F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.32653F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(146, 229);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(170, 349);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flowLayoutPanel2
@@ -81,10 +79,10 @@ namespace FoodStuffsController
             this.flowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel2.Controls.Add(this.btnAdd);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 118);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 180);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(140, 33);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(164, 52);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // btnAdd
@@ -106,10 +104,10 @@ namespace FoodStuffsController
             this.flowLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel3.Controls.Add(this.btnRemove);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 155);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 236);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(140, 33);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(164, 52);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
             // btnRemove
@@ -131,10 +129,10 @@ namespace FoodStuffsController
             this.flowLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel4.Controls.Add(this.btnEmpty);
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 192);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 292);
             this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(140, 35);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(164, 55);
             this.flowLayoutPanel4.TabIndex = 3;
             // 
             // btnEmpty
@@ -160,31 +158,61 @@ namespace FoodStuffsController
             this.tableLayoutPanel2.Controls.Add(this.idProduct, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.lblProduct, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.cbBin, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 2);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel2.RowCount = 5;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0005F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0005F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0005F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.9985F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(140, 112);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11117F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.2229F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.2229F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22068F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22235F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(164, 174);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // idBin
             // 
             this.idBin.AutoSize = true;
-            this.idBin.Location = new System.Drawing.Point(3, 0);
+            this.idBin.Location = new System.Drawing.Point(8, 5);
             this.idBin.Name = "idBin";
             this.idBin.Size = new System.Drawing.Size(24, 15);
             this.idBin.TabIndex = 0;
             this.idBin.Text = "Bin";
             // 
+            // pbCapacity
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.pbCapacity, 2);
+            this.pbCapacity.Location = new System.Drawing.Point(8, 133);
+            this.pbCapacity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pbCapacity.Name = "pbCapacity";
+            this.pbCapacity.Size = new System.Drawing.Size(134, 20);
+            this.pbCapacity.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pbCapacity.TabIndex = 7;
+            // 
+            // idStock
+            // 
+            this.idStock.AutoSize = true;
+            this.idStock.Location = new System.Drawing.Point(8, 95);
+            this.idStock.Name = "idStock";
+            this.idStock.Size = new System.Drawing.Size(36, 15);
+            this.idStock.TabIndex = 5;
+            this.idStock.Text = "Stock";
+            // 
+            // lblStock
+            // 
+            this.lblStock.AutoSize = true;
+            this.lblStock.Location = new System.Drawing.Point(71, 95);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(49, 15);
+            this.lblStock.TabIndex = 6;
+            this.lblStock.Text = "lblStock";
+            // 
             // idProduct
             // 
             this.idProduct.AutoSize = true;
-            this.idProduct.Location = new System.Drawing.Point(3, 44);
+            this.idProduct.Location = new System.Drawing.Point(8, 59);
             this.idProduct.Name = "idProduct";
             this.idProduct.Size = new System.Drawing.Size(49, 15);
             this.idProduct.TabIndex = 2;
@@ -193,7 +221,7 @@ namespace FoodStuffsController
             // lblProduct
             // 
             this.lblProduct.AutoSize = true;
-            this.lblProduct.Location = new System.Drawing.Point(60, 44);
+            this.lblProduct.Location = new System.Drawing.Point(71, 59);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(62, 15);
             this.lblProduct.TabIndex = 3;
@@ -204,45 +232,18 @@ namespace FoodStuffsController
             this.tableLayoutPanel2.SetColumnSpan(this.cbBin, 2);
             this.cbBin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbBin.FormattingEnabled = true;
-            this.cbBin.Location = new System.Drawing.Point(3, 24);
+            this.cbBin.Location = new System.Drawing.Point(8, 25);
             this.cbBin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbBin.Name = "cbBin";
-            this.cbBin.Size = new System.Drawing.Size(134, 23);
+            this.cbBin.Size = new System.Drawing.Size(148, 23);
             this.cbBin.TabIndex = 4;
-            // 
-            // idStock
-            // 
-            this.idStock.AutoSize = true;
-            this.idStock.Location = new System.Drawing.Point(3, 66);
-            this.idStock.Name = "idStock";
-            this.idStock.Size = new System.Drawing.Size(36, 15);
-            this.idStock.TabIndex = 5;
-            this.idStock.Text = "Stock";
-            // 
-            // lblStock
-            // 
-            this.lblStock.AutoSize = true;
-            this.lblStock.Location = new System.Drawing.Point(60, 66);
-            this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(49, 15);
-            this.lblStock.TabIndex = 6;
-            this.lblStock.Text = "lblStock";
-            // 
-            // pbCapacity
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.pbCapacity, 2);
-            this.pbCapacity.Location = new System.Drawing.Point(3, 90);
-            this.pbCapacity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pbCapacity.Name = "pbCapacity";
-            this.pbCapacity.Size = new System.Drawing.Size(134, 20);
-            this.pbCapacity.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pbCapacity.TabIndex = 7;
+            this.cbBin.SelectedIndexChanged += new System.EventHandler(this.cbBin_SelectedIndexChanged);
             // 
             // ControllerGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(170, 253);
+            this.ClientSize = new System.Drawing.Size(170, 349);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ControllerGUI";
             this.Text = "Form1";

@@ -1,9 +1,7 @@
 ﻿using FoodStuffs_Control_System.src;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 
 namespace FoodStuffsController.src
 {
@@ -32,6 +30,20 @@ namespace FoodStuffsController.src
         /// </summary>
         /// <param name="newBins"></param>
         public void setBins(List<FeedBin> newBins) { bins = newBins; }
+
+        /// <summary>
+        /// Create a list of all bins using their ToString method.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> StringBins()
+        {
+            List<string> strings = new List<string>();
+
+            SortByBinNo();
+            foreach(FeedBin bin in bins) { strings.Add(bin.ToString()); }
+
+            return strings;
+        }
 
         /// <summary>
         /// Search the list for a bin containing a product with the given name.

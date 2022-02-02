@@ -16,7 +16,27 @@ namespace FoodStuffsController
     public partial class ControllerGUI : Form
     {
         FeedBinController controller;
-        FeedBin currentBin;
+
+
+        // Define currentBin as a property
+        private FeedBin _currentBin;
+        private FeedBin currentBin { 
+            get { return _currentBin; }
+            set 
+            {
+                // Automatically update the values when the currentBin changes. (Observer)
+                _currentBin = value;
+                // Subscribe to the VariableChangedEvent from the currentBin
+                _currentBin.VariableChangedEvent += updateValues;
+                updateValues();
+            }
+        }
+
+        private List<string> binStrings;
+
+        // Define a boolean to ignore onChange events if caused by the system.
+        // If it is false, the onChange was triggered by a user input.
+        bool automatedChange = true;
 
         /// <summary>
         /// Create a ControllerGUI - the interface used by the bin controller.
@@ -27,16 +47,22 @@ namespace FoodStuffsController
 
             // Set the currentBin to the first bin in the controller list.
             controller = FeedBinController.getInstance();
+
+            binStrings = controller.StringBins();
+            cbBin.DataSource = binStrings;
+            cbBin.SelectedIndex = 0;
+
+            automatedChange = false;
+                        
             currentBin = controller.getBins()[0];
 
-
-            updateValues();
+            //updateValues();
         }
 
         /// <summary>
         /// Update the GUI to display the new information about the currentBin.
         /// </summary>
-        public void updateValues()
+        public void updateValues(object sender = null, EventArgs e = null)
         {
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
@@ -45,6 +71,23 @@ namespace FoodStuffsController
             // Define the scale and progress of the progress bar to show how full the bin is.
             pbCapacity.Maximum = Convert.ToInt32(currentBin.getMaxVolume());
             pbCapacity.Value = Convert.ToInt32(currentBin.getCurrentVolume());
+
+
+            // Update the cbBins
+            List<string> newBinStrings = controller.StringBins();
+            
+            if (!binStrings.Equals(newBinStrings)) 
+            {
+                automatedChange = true;
+                var selectedBin = cbBin.SelectedItem;
+                binStrings = newBinStrings;
+                cbBin.DataSource = binStrings;
+
+                try { cbBin.SelectedItem = selectedBin; }
+                catch (Exception err) { }
+
+                automatedChange = false;
+            }
 
         }
 
@@ -55,6 +98,23 @@ namespace FoodStuffsController
 
 
         // Action Listeners for the GUI functions.
+
+
+        /// <summary>
+        /// Update the currentBin when the user changes the bin.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbBin_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (automatedChange) return; // Ignore the change if it was performed by the software.
+
+            // Update the current bin.
+            currentBin = controller.getBins()[cbBin.SelectedIndex];
+            
+            //updateValues();
+        }
+
 
         /// <summary>
         /// Add a desired quantity of product to a bin.
@@ -74,7 +134,7 @@ namespace FoodStuffsController
 
                     if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {added}mᶟ.");
 
-                    updateValues();
+                    //updateValues();
                 }
                 catch (Exception err)
                 {
@@ -102,7 +162,7 @@ namespace FoodStuffsController
                     // Notify the user if the quantity of product could not be removed.
                     if (removed != toRemove) PopupBoxes.ShowError("Warning", $"Only {removed}mᶟ removed of the desired {toRemove}mᶟ.", MessageBoxIcon.Warning);
 
-                    updateValues();
+                    //updateValues();
                 }
                 catch (Exception err)
                 {
@@ -122,7 +182,7 @@ namespace FoodStuffsController
             if (result == DialogResult.OK)
             {
                 currentBin.flush();
-                updateValues();
+                //updateValues();
             }
         }
 
@@ -135,5 +195,7 @@ namespace FoodStuffsController
         {
             Application.Exit();
         }
+
+        
     }
 }
