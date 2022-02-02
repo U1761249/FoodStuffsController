@@ -9,6 +9,7 @@ namespace FoodStuffs_Control_System.src
     class FeedBin
     {
         private bool ignoreUpdateEvent = true;
+
         //FeedBin instance properties
         private int _binNumber;
         private string _productName;
@@ -19,9 +20,9 @@ namespace FoodStuffs_Control_System.src
         private int binNumber { get { return _binNumber; } 
             set 
             { 
-                _binNumber = value; 
-                if (!ignoreUpdateEvent)
-                    VariableChangedEvent(this, null); 
+                _binNumber = value;                     // Underscored variables store the data.
+                if (!ignoreUpdateEvent)                 // Check if the event should be triggered (Only false when the FeedBin is created)
+                    VariableChangedEvent(this, null);   // Trigger the event to update interfaces.
             } 
         }
         private string productName { get { return _productName; } 
@@ -52,6 +53,8 @@ namespace FoodStuffs_Control_System.src
         // Event for interfaces to subscribe to. Trigger interface updage when values change.
         public event EventHandler VariableChangedEvent;
 
+
+
         /// <summary>
         /// Constructor for a FeedBin
         /// </summary>
@@ -66,6 +69,7 @@ namespace FoodStuffs_Control_System.src
 
             ignoreUpdateEvent = false;  // Start listening to the VariableUpdateEvent after construction.
         }
+
 
         /// <summary>
         /// Change the name of the product assigned to the bin.

@@ -55,13 +55,13 @@ namespace FoodStuffsController
             automatedChange = false;
                         
             currentBin = controller.getBins()[0];
-
-            //updateValues();
         }
 
         /// <summary>
         /// Update the GUI to display the new information about the currentBin.
         /// </summary>
+        /// <param name="sender"> Used for the VariableUpdateEvent from FeedBin - Unused but required. </param>
+        /// <param name="e"> Used for the VariableUpdateEvent from FeedBin - Unused but required. </param>
         public void updateValues(object sender = null, EventArgs e = null)
         {
             //Set the text values for the product name and current volume.
@@ -111,8 +111,6 @@ namespace FoodStuffsController
 
             // Update the current bin.
             currentBin = controller.getBins()[cbBin.SelectedIndex];
-            
-            //updateValues();
         }
 
 
@@ -133,8 +131,6 @@ namespace FoodStuffsController
                     bool added = currentBin.addProduct(toAdd);
 
                     if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {added}mᶟ.");
-
-                    //updateValues();
                 }
                 catch (Exception err)
                 {
@@ -161,8 +157,6 @@ namespace FoodStuffsController
 
                     // Notify the user if the quantity of product could not be removed.
                     if (removed != toRemove) PopupBoxes.ShowError("Warning", $"Only {removed}mᶟ removed of the desired {toRemove}mᶟ.", MessageBoxIcon.Warning);
-
-                    //updateValues();
                 }
                 catch (Exception err)
                 {
@@ -182,7 +176,6 @@ namespace FoodStuffsController
             if (result == DialogResult.OK)
             {
                 currentBin.flush();
-                //updateValues();
             }
         }
 
