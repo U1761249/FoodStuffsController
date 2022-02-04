@@ -12,12 +12,32 @@ namespace FoodStuffsController.src
     /// </summary>
     class FeedBinController
     {
+        private bool ignoreUpdateEvent = true;
+
+        // Trigger an event when the bin list is changed.
+        public event EventHandler BinListChangedEvent;
+
         private static FeedBinController instance;
-        private List<FeedBin> bins;
+        private List<FeedBin> _bins;
+
+        private List<FeedBin> bins
+        {
+            get { return _bins; }
+            set
+            {
+                _bins = value;                          // Underscored variables store the data.
+                if (!ignoreUpdateEvent)                 // Check if the event should be triggered (Only false when the FeedBin is created)
+                    BinListChangedEvent(this, null);    // Trigger the event to update interfaces.
+            }
+        }
+
+
+
         private FeedBinController()
         {
             bins = new List<FeedBin>();
             PopulateBins();
+            ignoreUpdateEvent = false;
         }
         //Functions to manipulate the bins list.
         /// <summary>
@@ -103,13 +123,23 @@ namespace FoodStuffsController.src
         /// <param name="updated"></param>
         public void updateBin(FeedBin updated)
         {
-            lock (this)
-            {
-                // Get a list of all bins where the ID is the same as the updated bin.
-                bins.Where(b => b.getBinNumber() == updated.getBinNumber()).ToList()
-                    .ForEach(u => u = updated);
-                // Set the value of each bin to the updated bin.
 
+            //// Get a list of all bins where the ID is the same as the updated bin.
+            //bins.Where(b => b.getBinNumber() == updated.getBinNumber()).ToList()
+            //    .ForEach(u => u = updated);
+            //// Set the value of each bin to the updated bin.
+
+            List<FeedBin> binsCopy = bins;
+
+            for (int i = 0; i < binsCopy.Count; i++)
+            {
+                if (binsCopy[i].getBinNumber() == updated.getBinNumber())
+                {
+                    binsCopy[i] = updated;
+                    // Setting the bins to the copy triggers the BinListChangedEvent
+                    bins = binsCopy;
+                    break;
+                }
             }
 
         }

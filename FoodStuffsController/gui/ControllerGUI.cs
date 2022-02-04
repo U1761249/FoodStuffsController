@@ -49,6 +49,9 @@ namespace FoodStuffsController
             // Set the currentBin to the first bin in the controller list.
             controller = FeedBinController.getInstance();
 
+            // Run the updateValues() function when the bin list changes.
+            controller.BinListChangedEvent += updateValues;
+
             binStrings = controller.StringBins();
             cbBin.DataSource = binStrings;
             cbBin.SelectedIndex = 0;
@@ -66,13 +69,14 @@ namespace FoodStuffsController
         private void currentBinChanged(object sender, EventArgs e)
         {
             controller.updateBin(currentBin);
-            updateValues();
         }
 
         /// <summary>
         /// Update the GUI to display the new information about the currentBin.
         /// </summary>
-        public void updateValues()
+        /// <param name="sender">Required for events (Unused)</param>
+        /// <param name="e">Required for events (Unused)</param>
+        public void updateValues(object sender = null, EventArgs e = null)
         {
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
