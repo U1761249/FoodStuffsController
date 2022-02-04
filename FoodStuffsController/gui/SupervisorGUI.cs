@@ -14,23 +14,11 @@ namespace FoodStuffsController
 {
     public partial class SupervisorGUI : Form
     {
+
+        //___________________________________________________
+        // Define variables and a constructor.
+
         FeedBinController controller;
-
-
-        // Define currentBin as a property
-        private FeedBin _currentBin;
-        private FeedBin currentBin
-        {
-            get { return _currentBin; }
-            set
-            {
-                // Automatically update the values when the currentBin changes. (Observer)
-                _currentBin = value;
-                // Subscribe to the VariableChangedEvent from the currentBin
-                _currentBin.VariableChangedEvent += currentBinChanged;
-                updateValues();
-            }
-        }
 
         public SupervisorGUI()
         {
@@ -39,40 +27,38 @@ namespace FoodStuffsController
 
             controller.BinListChangedEvent += updateValues;
 
-            currentBin = controller.getBins()[0];
+            DataTable dt = controller.getBinsDataTable();
+
+            this.dataGridView1.DataSource = dt;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        private void currentBinChanged(object sender = null, EventArgs e = null)
-        {
-
-        }
-
+        //___________________________________________________
+        // Define subscriber functions to listen to events.
 
         private void updateValues(object sender = null, EventArgs e = null)
         {
-            lbBinNo.Text = currentBin.getBinNumber().ToString();
 
-            lbProdVolume.Text = currentBin.getCurrentVolume().ToString();
+            DataTable dt = controller.getBinsDataTable();
 
+            this.dataGridView1.DataSource = dt;
 
             updateGraph();
         }
+
+
+
+
+        //___________________________________________________
+        // Define functionality for the GUI
 
         private void updateGraph()
         {
 
         }
+
+
+        //___________________________________________________
+        // Action Listeners for the GUI functions..
 
         private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
         {

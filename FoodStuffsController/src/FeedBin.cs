@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,10 @@ namespace FoodStuffs_Control_System.src
 {
     class FeedBin
     {
+
+        //___________________________________________________
+        // Define variables and a constructor.
+
         private bool ignoreUpdateEvent = true;
 
         //FeedBin instance properties
@@ -15,6 +20,10 @@ namespace FoodStuffs_Control_System.src
         private string _productName;
         private double _maxVolume;
         private double _currentVolume;
+
+        // Event for interfaces to subscribe to.
+        // Trigger interface updage when values change.
+        public event EventHandler VariableChangedEvent;
 
         // Call the VariableChangedEvent whenever a variable changes.
         private int binNumber { get { return _binNumber; } 
@@ -50,10 +59,7 @@ namespace FoodStuffs_Control_System.src
             } 
         }
 
-        // Event for interfaces to subscribe to. Trigger interface updage when values change.
-        public event EventHandler VariableChangedEvent;
-
-
+        
 
         /// <summary>
         /// Constructor for a FeedBin
@@ -70,6 +76,18 @@ namespace FoodStuffs_Control_System.src
             ignoreUpdateEvent = false;  // Start listening to the VariableUpdateEvent after construction.
         }
 
+
+
+        //___________________________________________________
+        // Define class functionality.
+
+        /// <summary>
+        /// Override the default ToString method.
+        /// </summary>
+        /// <returns></returns>
+        override
+        public string ToString()
+        { return $"Bin {binNumber}: {productName}"; }
 
         /// <summary>
         /// Change the name of the product assigned to the bin.
@@ -133,6 +151,9 @@ namespace FoodStuffs_Control_System.src
             return volume;  // actual amount removed - may be less than requested
         }
 
+
+
+        //___________________________________________________
         // Getters for each of the values.
         public int getBinNumber() { return binNumber; }
         public string getProductName() { return productName; }
@@ -141,11 +162,8 @@ namespace FoodStuffs_Control_System.src
 
         public double getVolumePercentage() { return (maxVolume / 100) * currentVolume; }
 
-        /// <summary>
-        /// Override the default ToString method.
-        /// </summary>
-        /// <returns></returns>
-        override
-        public string ToString() { return $"Bin {binNumber}: {productName}"; }
+        
+
+        
     }
 }

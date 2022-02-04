@@ -15,7 +15,19 @@ namespace FoodStuffsController
 {
     public partial class ControllerGUI : Form
     {
+
+        //___________________________________________________
+        // Define variables and a constructor.
+
+
+
         FeedBinController controller;
+        
+        private List<string> binStrings;
+
+        // Define a boolean to ignore onChange events if caused by the system.
+        // If it is false, the onChange was triggered by a user input.
+        bool automatedChange = true;
 
 
         // Define currentBin as a property
@@ -28,16 +40,12 @@ namespace FoodStuffsController
                 // Automatically update the values when the currentBin changes. (Observer)
                 _currentBin = value;
                 // Subscribe to the VariableChangedEvent from the currentBin
-                _currentBin.VariableChangedEvent += currentBinChanged;
+                _currentBin.VariableChangedEvent += updateValues;
                 updateValues();
             }
         }
 
-        private List<string> binStrings;
-
-        // Define a boolean to ignore onChange events if caused by the system.
-        // If it is false, the onChange was triggered by a user input.
-        bool automatedChange = true;
+        
 
         /// <summary>
         /// Create a ControllerGUI - the interface used by the bin controller.
@@ -61,31 +69,9 @@ namespace FoodStuffsController
             currentBin = controller.getBins()[0];
         }
 
-        /// <summary>
-        /// Update the currentBin within the controller bin list.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void currentBinChanged(object sender, EventArgs e)
-        {
-            controller.updateBin(currentBin);
-        }
 
-        /// <summary>
-        /// Check that the currentBin did not change when the controller list updated.
-        /// </summary>
-        private void CheckCurrentBin()
-        {
-            // Get the current bin values from the list.
-            FeedBin currentBinInController = controller.FindByBinNo(currentBin.getBinNumber());
-
-            // Compare the local and global values.
-            if (currentBin != currentBinInController)
-            {
-                // Update the local values to the global values.
-                currentBin = currentBinInController;
-            }
-        }
+        //___________________________________________________
+        // Define subscriber functions to listen to events.
 
         /// <summary>
         /// Update the GUI to display the new information about the currentBin.
@@ -126,11 +112,34 @@ namespace FoodStuffsController
         }
 
 
+        //___________________________________________________
+        // Define functionality for the GUI
+
+
+        /// <summary>
+        /// Check that the currentBin did not change when the controller list updated.
+        /// </summary>
+        private void CheckCurrentBin()
+        {
+            // Get the current bin values from the list.
+            FeedBin currentBinInController = controller.FindByBinNo(currentBin.getBinNumber());
+
+            // Compare the local and global values.
+            if (currentBin != currentBinInController)
+            {
+                // Update the local values to the global values.
+                currentBin = currentBinInController;
+            }
+        }
 
 
 
 
 
+
+
+
+        //___________________________________________________
         // Action Listeners for the GUI functions.
 
 

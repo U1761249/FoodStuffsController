@@ -1,6 +1,7 @@
 ﻿using FoodStuffs_Control_System.src;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -12,33 +13,84 @@ namespace FoodStuffsController.src
     /// </summary>
     class FeedBinController
     {
-        private bool ignoreUpdateEvent = true;
+
+        //___________________________________________________
+        // Define variables and a constructor.
+
 
         // Trigger an event when the bin list is changed.
         public event EventHandler BinListChangedEvent;
 
         private static FeedBinController instance;
-        private List<FeedBin> _bins;
-
-        private List<FeedBin> bins
-        {
-            get { return _bins; }
-            set
-            {
-                _bins = value;                          // Underscored variables store the data.
-                if (!ignoreUpdateEvent)                 // Check if the event should be triggered (Only false when the FeedBin is created)
-                    BinListChangedEvent(this, null);    // Trigger the event to update interfaces.
-            }
-        }
-
+        private List<FeedBin> bins;
 
 
         private FeedBinController()
         {
             bins = new List<FeedBin>();
             PopulateBins();
-            ignoreUpdateEvent = false;
         }
+
+
+        //___________________________________________________
+        // Define instance getter and bin population.
+
+
+        /// <summary>
+        /// Get the instance of the conctroller.
+        /// Create the singleton instance if it does not exist.
+        /// </summary>
+        /// <returns></returns>
+        public static FeedBinController getInstance()
+        {
+            if (instance == null) instance = new FeedBinController();
+            return instance;
+        }
+
+        /// <summary>
+        /// Populate bins with initial values.
+        /// </summary>
+        private void PopulateBins()
+        {
+            AddBin(new FeedBin(1, "Wheaty Bits"));
+            AddBin(new FeedBin(2, "Meaty Bits"));
+            AddBin(new FeedBin(3, "Gravy Bits"));
+
+            //TODO: Make this pull from the database.
+        }
+
+
+        //___________________________________________________
+        // Define subscriber functions to listen to events.
+
+
+        /// <summary>
+        /// Add the bin to the list.
+        /// Subscribe the BinListChangedEvent to the bin VariableChangedEvent.
+        /// </summary>
+        /// <param name="bin"></param>
+        private void AddBin(FeedBin bin) 
+        {
+            bins.Add(bin);
+            bin.VariableChangedEvent += BinVariableChanged;
+        }
+
+        /// <summary>
+        /// Trigger the BinListChangedEvent when a VariableChangedEvent is triggered.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BinVariableChanged(object sender = null, EventArgs e = null) 
+        { 
+            BinListChangedEvent(this, null); 
+        }
+
+
+        //___________________________________________________
+        // Define class functionalty.
+
+
+
         //Functions to manipulate the bins list.
         /// <summary>
         /// Get the bins list.
@@ -50,7 +102,11 @@ namespace FoodStuffsController.src
         /// Override the bins list with a new list.
         /// </summary>
         /// <param name="newBins"></param>
-        public void setBins(List<FeedBin> newBins) { bins = newBins; }
+        public void setBins(List<FeedBin> newBins) 
+        { 
+            bins = newBins;
+            BinListChangedEvent(this, null);
+        }
 
         /// <summary>
         /// Create a list of all bins using their ToString method.
@@ -64,6 +120,29 @@ namespace FoodStuffsController.src
             foreach (FeedBin bin in bins) { strings.Add(bin.ToString()); }
 
             return strings;
+        }
+
+        public DataTable getBinsDataTable() 
+        {
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("BinNo");
+            dt.Columns.Add("Product");
+            dt.Columns.Add("CurrentVolume");
+            dt.Columns.Add("MaxVolume");
+
+            foreach (FeedBin bin in bins) 
+            {
+                DataRow row = dt.NewRow();
+                row["BinNo"] = bin.getBinNumber();
+                row["Product"] = bin.getProductName();
+                row["CurrentVolume"] = bin.getCurrentVolume();
+                row["MaxVolume"] = bin.getMaxVolume();
+
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
 
         /// <summary>
@@ -121,53 +200,11 @@ namespace FoodStuffsController.src
         /// Update a bin within the bins list.
         /// </summary>
         /// <param name="updated"></param>
-        public void updateBin(FeedBin updated)
+        public void updateBin()
         {
-
-            //// Get a list of all bins where the ID is the same as the updated bin.
-            //bins.Where(b => b.getBinNumber() == updated.getBinNumber()).ToList()
-            //    .ForEach(u => u = updated);
-            //// Set the value of each bin to the updated bin.
-
-            List<FeedBin> binsCopy = bins;
-
-            for (int i = 0; i < binsCopy.Count; i++)
-            {
-                if (binsCopy[i].getBinNumber() == updated.getBinNumber())
-                {
-                    binsCopy[i] = updated;
-                    // Setting the bins to the copy triggers the BinListChangedEvent
-                    bins = binsCopy;
-                    break;
-                }
-            }
-
+            BinListChangedEvent(this, null);
         }
 
 
-
-
-        /// <summary>
-        /// Get the instance of the conctroller.
-        /// Create the singleton instance if it does not exist.
-        /// </summary>
-        /// <returns></returns>
-        public static FeedBinController getInstance()
-        {
-            if (instance == null) instance = new FeedBinController();
-            return instance;
-        }
-
-        /// <summary>
-        /// Populate bins with initial values.
-        /// </summary>
-        private void PopulateBins()
-        {
-            bins.Add(new FeedBin(1, "Wheaty Bits"));
-            bins.Add(new FeedBin(2, "Meaty Bits"));
-            bins.Add(new FeedBin(3, "Gravy Bits"));
-
-            //TODO: Make this pull from the database.
-        }
     }
 }
