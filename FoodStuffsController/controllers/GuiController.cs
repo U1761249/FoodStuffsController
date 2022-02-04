@@ -5,13 +5,16 @@ using System.Windows.Forms;
 
 namespace FoodStuffsController.controllers
 {
+    /// <summary>
+    /// Used to control external GUI functions (E.G. CRUD operations)
+    /// </summary>
     class GuiController
     {
 
 
         public static void LaunchSupervisor()
         {
-            Application.Run(new SupervisorGUI());   
+            Application.Run(new SupervisorGUI());
         }
 
         public static void LaunchController()

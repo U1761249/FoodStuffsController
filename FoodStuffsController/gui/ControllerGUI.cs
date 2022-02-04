@@ -20,14 +20,15 @@ namespace FoodStuffsController
 
         // Define currentBin as a property
         private FeedBin _currentBin;
-        private FeedBin currentBin { 
+        private FeedBin currentBin
+        {
             get { return _currentBin; }
-            set 
+            set
             {
                 // Automatically update the values when the currentBin changes. (Observer)
                 _currentBin = value;
                 // Subscribe to the VariableChangedEvent from the currentBin
-                _currentBin.VariableChangedEvent += updateValues;
+                _currentBin.VariableChangedEvent += currentBinChanged;
                 updateValues();
             }
         }
@@ -53,16 +54,25 @@ namespace FoodStuffsController
             cbBin.SelectedIndex = 0;
 
             automatedChange = false;
-                        
+
             currentBin = controller.getBins()[0];
+        }
+
+        /// <summary>
+        /// Update the currentBin within the controller bin list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void currentBinChanged(object sender, EventArgs e)
+        {
+            controller.updateBin(currentBin);
+            updateValues();
         }
 
         /// <summary>
         /// Update the GUI to display the new information about the currentBin.
         /// </summary>
-        /// <param name="sender"> Used for the VariableUpdateEvent from FeedBin - Unused but required. </param>
-        /// <param name="e"> Used for the VariableUpdateEvent from FeedBin - Unused but required. </param>
-        public void updateValues(object sender = null, EventArgs e = null)
+        public void updateValues()
         {
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
@@ -75,8 +85,8 @@ namespace FoodStuffsController
 
             // Update the cbBins
             List<string> newBinStrings = controller.StringBins();
-            
-            if (!binStrings.Equals(newBinStrings)) 
+
+            if (!binStrings.Equals(newBinStrings))
             {
                 automatedChange = true;
                 var selectedBin = cbBin.SelectedItem;
@@ -189,6 +199,6 @@ namespace FoodStuffsController
             Application.Exit();
         }
 
-        
+
     }
 }

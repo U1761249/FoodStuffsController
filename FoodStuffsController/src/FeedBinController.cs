@@ -1,6 +1,7 @@
 ﻿using FoodStuffs_Control_System.src;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FoodStuffsController.src
@@ -11,10 +12,9 @@ namespace FoodStuffsController.src
     /// </summary>
     class FeedBinController
     {
-
         private static FeedBinController instance;
         private List<FeedBin> bins;
-        private FeedBinController() 
+        private FeedBinController()
         {
             bins = new List<FeedBin>();
             PopulateBins();
@@ -25,6 +25,7 @@ namespace FoodStuffsController.src
         /// </summary>
         /// <returns></returns>
         public List<FeedBin> getBins() { return bins; }
+
         /// <summary>
         /// Override the bins list with a new list.
         /// </summary>
@@ -40,7 +41,7 @@ namespace FoodStuffsController.src
             List<string> strings = new List<string>();
 
             SortByBinNo();
-            foreach(FeedBin bin in bins) { strings.Add(bin.ToString()); }
+            foreach (FeedBin bin in bins) { strings.Add(bin.ToString()); }
 
             return strings;
         }
@@ -51,7 +52,7 @@ namespace FoodStuffsController.src
         /// </summary>
         /// <param name="product"></param>
         /// <returns>Found value, or Null</returns>
-        public FeedBin FindByProduct(string product) 
+        public FeedBin FindByProduct(string product)
         {
             // Find the first bin with the desired product.
             FeedBin found = bins.Find(bin => bin.getProductName() == product);
@@ -64,7 +65,7 @@ namespace FoodStuffsController.src
         /// </summary>
         /// <param name="binNo"></param>
         /// <returns>Found value, or Null</returns>
-        public FeedBin FindByBinNo(int binNo) 
+        public FeedBin FindByBinNo(int binNo)
         {
             // Find the first bin with the desired ID.
             FeedBin found = bins.Find(bin => bin.getBinNumber() == binNo);
@@ -74,7 +75,7 @@ namespace FoodStuffsController.src
         /// <summary>
         /// Sort the bins in order of ID (Ascending)
         /// </summary>
-        public void SortByBinNo() 
+        public void SortByBinNo()
         {
             bins.Sort((b1, b2) => b1.getBinNumber().CompareTo(b2.getBinNumber()));
         }
@@ -96,8 +97,22 @@ namespace FoodStuffsController.src
             bins.Sort((b1, b2) => b1.getVolumePercentage().CompareTo(b2.getVolumePercentage()));
         }
 
+        /// <summary>
+        /// Update a bin within the bins list.
+        /// </summary>
+        /// <param name="updated"></param>
+        public void updateBin(FeedBin updated)
+        {
+            lock (this)
+            {
+                // Get a list of all bins where the ID is the same as the updated bin.
+                bins.Where(b => b.getBinNumber() == updated.getBinNumber()).ToList()
+                    .ForEach(u => u = updated);
+                // Set the value of each bin to the updated bin.
 
+            }
 
+        }
 
 
 
@@ -107,7 +122,8 @@ namespace FoodStuffsController.src
         /// Create the singleton instance if it does not exist.
         /// </summary>
         /// <returns></returns>
-        public static FeedBinController getInstance() { 
+        public static FeedBinController getInstance()
+        {
             if (instance == null) instance = new FeedBinController();
             return instance;
         }
@@ -115,7 +131,7 @@ namespace FoodStuffsController.src
         /// <summary>
         /// Populate bins with initial values.
         /// </summary>
-        private void PopulateBins() 
+        private void PopulateBins()
         {
             bins.Add(new FeedBin(1, "Wheaty Bits"));
             bins.Add(new FeedBin(2, "Meaty Bits"));
