@@ -27,7 +27,7 @@ namespace FoodStuffsController
                 // Automatically update the values when the currentBin changes. (Observer)
                 _currentBin = value;
                 // Subscribe to the VariableChangedEvent from the currentBin
-                _currentBin.VariableChangedEvent += updateValues;
+                _currentBin.VariableChangedEvent += currentBinChanged;
                 updateValues();
             }
         }
@@ -35,6 +35,11 @@ namespace FoodStuffsController
         public SupervisorGUI()
         {
             InitializeComponent();
+            controller = FeedBinController.getInstance();
+
+            controller.BinListChangedEvent += updateValues;
+
+            currentBin = controller.getBins()[0];
         }
 
 
@@ -48,17 +53,25 @@ namespace FoodStuffsController
 
 
 
-
-
-
-        private void updateValues(object sender = null, EventArgs e = null) 
+        private void currentBinChanged(object sender = null, EventArgs e = null)
         {
+
+        }
+
+
+        private void updateValues(object sender = null, EventArgs e = null)
+        {
+            lbBinNo.Text = currentBin.getBinNumber().ToString();
+
+            lbProdVolume.Text = currentBin.getCurrentVolume().ToString();
+
+
             updateGraph();
         }
 
-        private void updateGraph() 
-        { 
-            
+        private void updateGraph()
+        {
+
         }
 
         private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)

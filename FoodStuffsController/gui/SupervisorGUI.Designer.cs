@@ -31,6 +31,8 @@ namespace FoodStuffsController
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelGraph = new System.Windows.Forms.Panel();
+            this.lbProdVolume = new System.Windows.Forms.Label();
+            this.lbBinNo = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,35 +42,57 @@ namespace FoodStuffsController
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panelGraph, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lbProdVolume, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lbBinNo, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(700, 338);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 451);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelGraph
             // 
             this.panelGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGraph.Location = new System.Drawing.Point(353, 3);
+            this.panelGraph.Location = new System.Drawing.Point(403, 4);
+            this.panelGraph.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(344, 163);
+            this.panelGraph.Size = new System.Drawing.Size(394, 217);
             this.panelGraph.TabIndex = 0;
+            // 
+            // lbProdVolume
+            // 
+            this.lbProdVolume.AutoSize = true;
+            this.lbProdVolume.Location = new System.Drawing.Point(403, 225);
+            this.lbProdVolume.Name = "lbProdVolume";
+            this.lbProdVolume.Size = new System.Drawing.Size(50, 20);
+            this.lbProdVolume.TabIndex = 1;
+            this.lbProdVolume.Text = "label1";
+            // 
+            // lbBinNo
+            // 
+            this.lbBinNo.AutoSize = true;
+            this.lbBinNo.Location = new System.Drawing.Point(3, 225);
+            this.lbBinNo.Name = "lbBinNo";
+            this.lbBinNo.Size = new System.Drawing.Size(63, 20);
+            this.lbBinNo.TabIndex = 2;
+            this.lbBinNo.Text = "lbBinNo";
             // 
             // SupervisorGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 338);
+            this.ClientSize = new System.Drawing.Size(800, 451);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SupervisorGUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SupervisorGUI_FormClosed);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -77,6 +101,8 @@ namespace FoodStuffsController
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelGraph;
+        private System.Windows.Forms.Label lbProdVolume;
+        private System.Windows.Forms.Label lbBinNo;
     }
 }
 

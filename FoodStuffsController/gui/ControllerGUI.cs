@@ -72,12 +72,32 @@ namespace FoodStuffsController
         }
 
         /// <summary>
+        /// Check that the currentBin did not change when the controller list updated.
+        /// </summary>
+        private void CheckCurrentBin()
+        {
+            // Get the current bin values from the list.
+            FeedBin currentBinInController = controller.FindByBinNo(currentBin.getBinNumber());
+
+            // Compare the local and global values.
+            if (currentBin != currentBinInController)
+            {
+                // Update the local values to the global values.
+                currentBin = currentBinInController;
+            }
+        }
+
+        /// <summary>
         /// Update the GUI to display the new information about the currentBin.
         /// </summary>
         /// <param name="sender">Required for events (Unused)</param>
         /// <param name="e">Required for events (Unused)</param>
-        public void updateValues(object sender = null, EventArgs e = null)
+        private void updateValues(object sender = null, EventArgs e = null)
         {
+            // Confirm that the current bin did not change.
+            CheckCurrentBin();
+
+
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = currentBin.getProductName();
             this.lblStock.Text = $"{currentBin.getCurrentVolume()}mᶟ";
