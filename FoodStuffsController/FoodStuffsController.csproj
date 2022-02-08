@@ -5,6 +5,7 @@
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>Adam Birch</Authors>
+    <StartupObject>FoodStuffsController.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

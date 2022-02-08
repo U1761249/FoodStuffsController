@@ -15,7 +15,7 @@ namespace FoodStuffsController.controllers
         private static SupervisorGuiController instance;
         public static SupervisorGuiController getInstance()
         {
-            if (instance == null) instance = new FeedBinController();
+            if (instance == null) instance = new SupervisorGuiController();
             return instance;
         }
         private SupervisorGuiController() { }
