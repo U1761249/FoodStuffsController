@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +15,8 @@ namespace FoodStuffsController
 {
     public partial class SupervisorGUI : Form
     {
+        // Define a delegate to use BeginInvoke to update values using the thread it was created on.
+        public delegate void InvokeDelegate();
 
         //___________________________________________________
         // Define variables and a constructor.
@@ -23,13 +26,12 @@ namespace FoodStuffsController
         public SupervisorGUI()
         {
             InitializeComponent();
+            Thread.CurrentThread.Name = "SupervisorThread";
             controller = FeedBinController.getInstance();
 
             controller.BinListChangedEvent += updateValues;
 
-            DataTable dt = controller.getBinsDataTable();
-
-            this.dataGridView1.DataSource = dt;
+            updateValues();
         }
 
         //___________________________________________________
@@ -37,12 +39,12 @@ namespace FoodStuffsController
 
         private void updateValues(object sender = null, EventArgs e = null)
         {
-
-            DataTable dt = controller.getBinsDataTable();
-
-            this.dataGridView1.DataSource = dt;
-
-            updateGraph();
+            try
+            {
+                dataGridView1.BeginInvoke(new InvokeDelegate(updateGraph));
+            }
+            catch (InvalidOperationException err) { }
+            //updateGraph();
         }
 
 
@@ -53,7 +55,11 @@ namespace FoodStuffsController
 
         private void updateGraph()
         {
+            Console.WriteLine(Thread.CurrentThread.Name);
 
+            DataTable dt = controller.getBinsDataTable();
+
+            this.dataGridView1.DataSource = dt;
         }
 
 
@@ -63,6 +69,11 @@ namespace FoodStuffsController
         private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void SupervisorGUI_Shown(object sender, EventArgs e)
+        {
+            updateValues();
         }
     }
 }

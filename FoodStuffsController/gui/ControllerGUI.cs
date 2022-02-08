@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace FoodStuffsController
 {
@@ -39,6 +40,7 @@ namespace FoodStuffsController
         public ControllerGUI()
         {
             InitializeComponent();
+            Thread.CurrentThread.Name = "ControllerThread";
 
             // Set the currentBin to the first bin in the controller list.
             controller = FeedBinController.getInstance();
