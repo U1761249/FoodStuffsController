@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace FoodStuffsController
 {
@@ -41,10 +42,9 @@ namespace FoodStuffsController
         {
             try
             {
-                dataGridView1.BeginInvoke(new InvokeDelegate(updateGraph));
+                binChart.BeginInvoke(new InvokeDelegate(updateGraph));
             }
             catch (InvalidOperationException err) { }
-            //updateGraph();
         }
 
 
@@ -55,11 +55,39 @@ namespace FoodStuffsController
 
         private void updateGraph()
         {
-            Console.WriteLine(Thread.CurrentThread.Name);
+            try
+            {
+                DataTable dt = controller.getBinsDataTable();
+                binChart.Series.Clear();
 
-            DataTable dt = controller.getBinsDataTable();
+                //// Data arrays.
+                //string[] seriesArray = { "Cats", "Dogs" };
+                //int[] pointsArray = { 1, 2 };
 
-            this.dataGridView1.DataSource = dt;
+                //// Set palette.
+                //this.binChart.Palette = ChartColorPalette.SeaGreen;
+
+                //// Set title.
+                //this.binChart.Titles.Add("Bin Fill Percentages");
+
+                //// Add series.
+                //for (int i = 0; i < seriesArray.Length; i++)
+                //{
+                //    // Add series.
+                //    Series series = this.binChart.Series.Add(seriesArray[i]);
+
+                //    // Add point.
+                //    series.Points.Add(pointsArray[i]);
+                //}
+
+                binChart.DataSource = dt;
+                binChart.Series[0].ChartType = SeriesChartType.Bar;
+                binChart.Legends[0].Enabled = true;
+                binChart.Series[0].XValueMember = "Feed Bin";
+                binChart.Series[0].YValueMembers = "Capacity";
+                binChart.DataBind();
+            }
+            catch (Exception e) { }
         }
 
 
