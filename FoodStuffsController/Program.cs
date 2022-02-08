@@ -21,6 +21,7 @@ namespace FoodStuffsController
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            FeedBinController controller = FeedBinController.getInstance();
 
             Thread t1 = new Thread(GuiController.LaunchController);
             t1.Start();

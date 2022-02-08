@@ -48,25 +48,27 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(262, 114);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(218, 95);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // lblPrompt
             // 
             this.lblPrompt.AutoSize = true;
-            this.lblPrompt.Location = new System.Drawing.Point(3, 10);
-            this.lblPrompt.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+            this.lblPrompt.Location = new System.Drawing.Point(3, 8);
+            this.lblPrompt.Margin = new System.Windows.Forms.Padding(3, 8, 3, 0);
             this.lblPrompt.Name = "lblPrompt";
-            this.lblPrompt.Size = new System.Drawing.Size(50, 20);
+            this.lblPrompt.Size = new System.Drawing.Size(46, 17);
             this.lblPrompt.TabIndex = 0;
             this.lblPrompt.Text = "label1";
             // 
             // tbValue
             // 
-            this.tbValue.Location = new System.Drawing.Point(3, 33);
+            this.tbValue.Location = new System.Drawing.Point(3, 27);
+            this.tbValue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbValue.Name = "tbValue";
-            this.tbValue.Size = new System.Drawing.Size(197, 27);
+            this.tbValue.Size = new System.Drawing.Size(197, 22);
             this.tbValue.TabIndex = 1;
             this.tbValue.TextChanged += new System.EventHandler(this.tbValue_TextChanged);
             // 
@@ -75,17 +77,19 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel2.Controls.Add(this.btnOK);
             this.flowLayoutPanel2.Controls.Add(this.btnCancel);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 66);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 53);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(250, 43);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(215, 34);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(3, 3);
+            this.btnOK.Location = new System.Drawing.Point(3, 2);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(94, 29);
+            this.btnOK.Size = new System.Drawing.Size(94, 23);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -93,20 +97,22 @@ namespace FoodStuffsController.gui.MessageBoxes
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(103, 3);
+            this.btnCancel.Location = new System.Drawing.Point(103, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(94, 29);
+            this.btnCancel.Size = new System.Drawing.Size(94, 23);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // InputDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 114);
+            this.ClientSize = new System.Drawing.Size(218, 95);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputDialog";
