@@ -48,16 +48,18 @@ namespace FoodStuffsController
             // Run the updateValues() function when the bin list changes.
             controller.BinListChangedEvent += updateValues;
 
+
             // Define the controller for the interface.
             cgc = ControllerGuiController.getInstance();
 
             // Subscribe to events from the controller.
-            //cgc.CurrentBinUpdate += setBin;
-
-
+            cgc.CurrentBinUpdate += updateValues;
+                        
             binStrings = controller.StringBins();
             cbBin.DataSource = binStrings;
             cbBin.SelectedIndex = 0;
+            
+            updateValues();
 
             automatedChange = false;
 

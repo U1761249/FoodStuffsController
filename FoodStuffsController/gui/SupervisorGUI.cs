@@ -27,12 +27,13 @@ namespace FoodStuffsController
         public SupervisorGUI()
         {
             InitializeComponent();
+                        
             Thread.CurrentThread.Name = "SupervisorThread";
             controller = FeedBinController.getInstance();
 
             controller.BinListChangedEvent += updateValues;
 
-            updateValues();
+
         }
 
         //___________________________________________________
@@ -57,34 +58,31 @@ namespace FoodStuffsController
         {
             try
             {
-                DataTable dt = controller.getBinsDataTable();
+                binChart.ChartAreas.Clear();
                 binChart.Series.Clear();
+                binChart.ChartAreas.Add(new ChartArea()) ;                
+                binChart.ChartAreas[0].AxisY.Maximum = 100;
+                binChart.ChartAreas[0].AxisX.Maximum = controller.getBins().Count();
 
-                //// Data arrays.
-                //string[] seriesArray = { "Cats", "Dogs" };
-                //int[] pointsArray = { 1, 2 };
+                foreach (FeedBin bin in controller.getBins()) 
+                {
+                    int binNo = bin.getBinNumber();
 
-                //// Set palette.
-                //this.binChart.Palette = ChartColorPalette.SeaGreen;
+                    Series s = new Series($"Bin{binNo}");
+                                        
+                    s.ChartType = SeriesChartType.Column;
+                    s.Enabled = true;
+                    s.XValueMember = s.Name;
+                    s.YValueMembers = "Capacity";
+                    s.Label = $"{bin.getVolumePercentage()}%";
+                    
 
-                //// Set title.
-                //this.binChart.Titles.Add("Bin Fill Percentages");
+                    s.Points.Add(bin.getVolumePercentage());
 
-                //// Add series.
-                //for (int i = 0; i < seriesArray.Length; i++)
-                //{
-                //    // Add series.
-                //    Series series = this.binChart.Series.Add(seriesArray[i]);
+                    binChart.Series.Add(s);
+                }
 
-                //    // Add point.
-                //    series.Points.Add(pointsArray[i]);
-                //}
-
-                binChart.DataSource = dt;
-                binChart.Series[0].ChartType = SeriesChartType.Bar;
-                binChart.Legends[0].Enabled = true;
-                binChart.Series[0].XValueMember = "Feed Bin";
-                binChart.Series[0].YValueMembers = "Capacity";
+                
                 binChart.DataBind();
             }
             catch (Exception e) { }
@@ -103,5 +101,6 @@ namespace FoodStuffsController
         {
             updateValues();
         }
+
     }
 }

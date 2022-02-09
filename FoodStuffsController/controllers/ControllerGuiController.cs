@@ -31,6 +31,9 @@ namespace FoodStuffsController.controllers
             get { return _currentBin; }
             set
             {
+                // Unsubscribe the current bin.
+                _currentBin.VariableChangedEvent -= CurrentBinChanged;
+
                 // Automatically update the values when the currentBin changes. (Observer)
                 _currentBin = value;
                 // Subscribe to the VariableChangedEvent from the currentBin
@@ -56,6 +59,7 @@ namespace FoodStuffsController.controllers
         public void updateSelectedBin(int index)
         {
             currentBin = controller.getBins()[index];
+            CurrentBinUpdate(this, null);
         }
 
         public void add()

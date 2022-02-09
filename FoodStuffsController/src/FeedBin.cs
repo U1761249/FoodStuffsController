@@ -160,7 +160,11 @@ namespace FoodStuffs_Control_System.src
         public double getMaxVolume() { return maxVolume; }
         public double getCurrentVolume() { return currentVolume; }
 
-        public double getVolumePercentage() { return (maxVolume / 100) * currentVolume; }
+        public double getVolumePercentage() 
+        {
+            if (currentVolume == 0) return 0;
+            return (currentVolume / maxVolume) * 100; 
+        }
 
         
 

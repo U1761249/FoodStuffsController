@@ -48,22 +48,20 @@ namespace FoodStuffsController
             this.tableLayoutPanel1.Controls.Add(this.panelGraph, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 361);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(600, 293);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelGraph
             // 
             this.panelGraph.Controls.Add(this.binChart);
             this.panelGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGraph.Location = new System.Drawing.Point(404, 4);
-            this.panelGraph.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelGraph.Location = new System.Drawing.Point(303, 3);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(392, 172);
+            this.panelGraph.Size = new System.Drawing.Size(294, 140);
             this.panelGraph.TabIndex = 0;
             // 
             // binChart
@@ -74,23 +72,22 @@ namespace FoodStuffsController
             legend1.Name = "Legend1";
             this.binChart.Legends.Add(legend1);
             this.binChart.Location = new System.Drawing.Point(0, 0);
-            this.binChart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.binChart.Name = "binChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.binChart.Series.Add(series1);
-            this.binChart.Size = new System.Drawing.Size(392, 172);
+            this.binChart.Size = new System.Drawing.Size(294, 140);
             this.binChart.TabIndex = 0;
             this.binChart.Text = "binChart";
             // 
             // SupervisorGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 361);
+            this.ClientSize = new System.Drawing.Size(600, 293);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SupervisorGUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
