@@ -62,7 +62,10 @@ namespace FoodStuffsController
                 binChart.Series.Clear();
                 binChart.ChartAreas.Add(new ChartArea()) ;                
                 binChart.ChartAreas[0].AxisY.Maximum = 100;
-                binChart.ChartAreas[0].AxisX.Maximum = controller.getBins().Count();
+                binChart.ChartAreas[0].AxisX.Maximum = controller.getBins().Count() + 1;
+
+                binChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+                binChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
 
                 foreach (FeedBin bin in controller.getBins()) 
                 {
@@ -72,18 +75,16 @@ namespace FoodStuffsController
                                         
                     s.ChartType = SeriesChartType.Column;
                     s.Enabled = true;
-                    s.XValueMember = s.Name;
                     s.YValueMembers = "Capacity";
                     s.Label = $"{bin.getVolumePercentage()}%";
-                    
 
-                    s.Points.Add(bin.getVolumePercentage());
 
+                    s.Points.Add(new DataPoint(binNo, bin.getVolumePercentage()));
+                        
                     binChart.Series.Add(s);
                 }
 
                 
-                binChart.DataBind();
             }
             catch (Exception e) { }
         }
