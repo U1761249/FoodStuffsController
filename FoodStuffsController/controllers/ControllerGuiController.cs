@@ -62,6 +62,36 @@ namespace FoodStuffsController.controllers
             CurrentBinUpdate(this, null);
         }
 
+        /// <summary>
+        /// Change the content of a bin.
+        /// </summary>
+        public void change() 
+        {
+            string value = "";
+            if (PopupBoxes.InputBox("New Product", "What is the new product:", ref value) == DialogResult.OK)
+            {
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+
+
+                    // Empty the bin if there is still product in it.
+                    if (currentBin.getCurrentVolume() > 0) { empty(); }
+
+                    // Cancel if the bin was not flushed.
+                    if (currentBin.getCurrentVolume() > 0) { return; }
+
+                    currentBin.setProductName(value);
+                }
+                else 
+                {
+                    PopupBoxes.ShowError("Illegal argument", "Product name cannot be empty.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add a given quantity to the bin.
+        /// </summary>
         public void add()
         {
             string value = "";
@@ -82,6 +112,9 @@ namespace FoodStuffsController.controllers
             }
         }
 
+        /// <summary>
+        /// Remove a given quantity from the bin.
+        /// </summary>
         public void remove()
         {
             string value = "";
@@ -102,6 +135,9 @@ namespace FoodStuffsController.controllers
             }
         }
 
+        /// <summary>
+        /// Flush the content of the bin.
+        /// </summary>
         public void empty()
         {
             DialogResult result = MessageBox.Show("This will empty the bin. \nContinue?", "Flush bin?", MessageBoxButtons.OKCancel);

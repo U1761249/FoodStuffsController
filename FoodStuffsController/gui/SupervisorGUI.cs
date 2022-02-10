@@ -43,6 +43,7 @@ namespace FoodStuffsController
         {
             try
             {
+                binChart.BeginInvoke(new InvokeDelegate(updateDisplay));
                 binChart.BeginInvoke(new InvokeDelegate(updateGraph));
             }
             catch (InvalidOperationException err) { }
@@ -54,6 +55,17 @@ namespace FoodStuffsController
         //___________________________________________________
         // Define functionality for the GUI
 
+        /// <summary>
+        /// Update the display data to the current data.
+        /// </summary>
+        private void updateDisplay() 
+        { 
+        
+        }
+
+        /// <summary>
+        /// Convert the data from the controller bin list into a graph.
+        /// </summary>
         private void updateGraph()
         {
             try

@@ -122,6 +122,15 @@ namespace FoodStuffsController
             cgc.updateSelectedBin(cbBin.SelectedIndex);
         }
 
+        /// <summary>
+        /// Change the product within a bin.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnChange_Click(object sender, EventArgs e)
+        {
+            cgc.change();
+        }
 
         /// <summary>
         /// Add a desired quantity of product to a bin.
@@ -163,6 +172,6 @@ namespace FoodStuffsController
             Application.Exit();
         }
 
-
+        
     }
 }
