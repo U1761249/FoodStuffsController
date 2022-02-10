@@ -83,9 +83,14 @@ namespace FoodStuffsController.src
             r3.addIngredient(new RecipeIngredient("Meaty Bits", 20));
             r3.addIngredient(new RecipeIngredient("Gravy Bits", 60));
 
+            Recipe r4 = new Recipe("Recipe 4");
+            r4.addIngredient(new RecipeIngredient("Meaty Bits", 35));
+            r4.addIngredient(new RecipeIngredient("Tasty Bits", 65));
+
             recipes.Add(r1);
             recipes.Add(r2);
             recipes.Add(r3);
+            recipes.Add(r4);
 
             //TODO: Make this pull from the database.
         }
@@ -216,9 +221,21 @@ namespace FoodStuffsController.src
             return dt;
         }
 
-        private double getMaxBatch(Recipe r) 
+        private double getMaxBatch(Recipe recipe) 
         {
-            return 0;
+            double maxBatch = double.PositiveInfinity;
+
+            foreach (RecipeIngredient ri in recipe.ingredients) 
+            {
+                FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                // Return 0 if there is an ingredient with no current bin.
+                if (ingredientBin == null) return 0;
+
+                double maxIngredient = (ingredientBin.getCurrentVolume() / ri.ingredientPercentage) * 100;
+                if (maxIngredient < maxBatch) { maxBatch = maxIngredient; }
+            }
+            if (maxBatch == double.PositiveInfinity) maxBatch = 0;
+            return maxBatch;
         }
 
 
