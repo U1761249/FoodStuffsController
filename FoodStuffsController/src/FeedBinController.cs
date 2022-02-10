@@ -163,6 +163,16 @@ namespace FoodStuffsController.src
             RecipeListChangedEvent(this, null);
         }
 
+        public List<string> getRecipeList() 
+        {
+            List<string> recipeStrings = new List<string>();
+            foreach (Recipe r in recipes) 
+            {
+                recipeStrings.Add(r.RecipeName);
+            }
+            return recipeStrings;
+        }
+
         /// <summary>
         /// Create a list of all bins using their ToString method.
         /// </summary>

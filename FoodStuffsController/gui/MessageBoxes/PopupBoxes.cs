@@ -35,5 +35,13 @@ namespace FoodStuffsController.gui.MessageBoxes
             return dialogResult;
         }
 
+        public static DialogResult MakeBatch(ref KeyValuePair<string, double> value, List<string> recipes) 
+        {
+            BatchDialog bd = new BatchDialog(recipes);
+            DialogResult dialogResult = bd.ShowDialog();
+            value = bd.getValue();
+            return dialogResult;
+        }
+
     }
 }
