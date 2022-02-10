@@ -54,7 +54,7 @@ namespace FoodStuffsController.src
 
             foreach (RecipeIngredient ri in ingredients) 
             {
-                sb.AppendLine(ri.ingredientName);
+                sb.AppendLine($"{ri.ingredientName} ({ri.ingredientPercentage}%)");
             }
 
             return sb.ToString();

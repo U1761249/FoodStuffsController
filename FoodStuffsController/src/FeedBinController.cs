@@ -211,9 +211,12 @@ namespace FoodStuffsController.src
             foreach (Recipe recipe in recipes)
             {
                 DataRow row = dt.NewRow();
+                // Get the recipe name.
                 row["Product"] = recipe.RecipeName;
+                // Get a list of ingredients and ratios.
                 row["Ingredients"] = recipe.getIngredientString();
-                row["BatchMax"] = getMaxBatch(recipe);
+                // Get the maximum size of a batch - rounded to 2dp
+                row["BatchMax"] = Math.Round(getMaxBatch(recipe), 2) + "mᶟ";
 
                 dt.Rows.Add(row);
             }
