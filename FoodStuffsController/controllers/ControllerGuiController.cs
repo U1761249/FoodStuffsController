@@ -16,6 +16,7 @@ namespace FoodStuffsController.controllers
     class ControllerGuiController
     {
         public event EventHandler CurrentBinUpdate;
+        private FeedBinController controller;
 
         private static ControllerGuiController instance;
         public static ControllerGuiController getInstance()
@@ -47,7 +48,6 @@ namespace FoodStuffsController.controllers
             CurrentBinUpdate(this, null);
         }
 
-        private FeedBinController controller;
 
 
         private ControllerGuiController()

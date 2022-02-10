@@ -18,17 +18,20 @@ namespace FoodStuffsController.src
         // Define variables and a constructor.
 
 
-        // Trigger an event when the bin list is changed.
+        // Trigger an event when the lists are changed.
         public event EventHandler BinListChangedEvent;
+        public event EventHandler RecipeListChangedEvent;
 
         private static FeedBinController instance;
         private List<FeedBin> bins;
-
+        private List<Recipe> recipes;
 
         private FeedBinController()
         {
             bins = new List<FeedBin>();
+            recipes = new List<Recipe>();
             PopulateBins();
+            PopulateRecipes();
         }
 
 
@@ -58,6 +61,34 @@ namespace FoodStuffsController.src
 
             //TODO: Make this pull from the database.
         }
+        /// <summary>
+        /// Populate the recipes with initial values.
+        /// </summary>
+        private void PopulateRecipes() 
+        {
+
+            Recipe r1 = new Recipe("Recipe 1");
+            r1.addIngredient(new RecipeIngredient("Wheaty Bits", 50));
+            r1.addIngredient(new RecipeIngredient("Gravy Bits", 50));
+
+
+            Recipe r2 = new Recipe("Recipe 2");
+            r2.addIngredient(new RecipeIngredient("Meaty Bits", 35));
+            r2.addIngredient(new RecipeIngredient("Gravy Bits", 65));
+
+
+
+            Recipe r3 = new Recipe("Recipe 3");
+            r3.addIngredient(new RecipeIngredient("Wheaty Bits", 20));
+            r3.addIngredient(new RecipeIngredient("Meaty Bits", 20));
+            r3.addIngredient(new RecipeIngredient("Gravy Bits", 60));
+
+            recipes.Add(r1);
+            recipes.Add(r2);
+            recipes.Add(r3);
+
+            //TODO: Make this pull from the database.
+        }
 
 
         //___________________________________________________
@@ -75,6 +106,12 @@ namespace FoodStuffsController.src
             bin.VariableChangedEvent += BinVariableChanged;
         }
 
+        private void AddRecipe(Recipe recipe) 
+        {
+            recipes.Add(recipe);
+            recipe.VariableChangedEvent += RecipeVariableChanged;
+        }
+
         /// <summary>
         /// Trigger the BinListChangedEvent when a VariableChangedEvent is triggered.
         /// </summary>
@@ -83,6 +120,11 @@ namespace FoodStuffsController.src
         private void BinVariableChanged(object sender = null, EventArgs e = null) 
         { 
             BinListChangedEvent(this, null); 
+        }
+
+        private void RecipeVariableChanged(object sender = null, EventArgs e = null)
+        {
+            RecipeListChangedEvent(this, null);
         }
 
 
@@ -106,6 +148,14 @@ namespace FoodStuffsController.src
         { 
             bins = newBins;
             BinListChangedEvent(this, null);
+        }
+
+        public List<Recipe> getRecipes() { return recipes; }
+
+        public void setRecipse(List<Recipe> newRecipes) 
+        {
+            recipes = newRecipes;
+            RecipeListChangedEvent(this, null);
         }
 
         /// <summary>
@@ -144,6 +194,33 @@ namespace FoodStuffsController.src
 
             return dt;
         }
+
+        public DataTable getRecipeDataTable()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("Product");
+            dt.Columns.Add("Ingredients");
+            dt.Columns.Add("BatchMax");
+
+            foreach (Recipe recipe in recipes)
+            {
+                DataRow row = dt.NewRow();
+                row["Product"] = recipe.RecipeName;
+                row["Ingredients"] = recipe.getIngredientString();
+                row["BatchMax"] = getMaxBatch(recipe);
+
+                dt.Rows.Add(row);
+            }
+
+            return dt;
+        }
+
+        private double getMaxBatch(Recipe r) 
+        {
+            return 0;
+        }
+
 
         /// <summary>
         /// Search the list for a bin containing a product with the given name.

@@ -1,4 +1,5 @@
 ﻿using FoodStuffs_Control_System.src;
+using FoodStuffsController.controllers;
 using FoodStuffsController.src;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,24 @@ namespace FoodStuffsController
         // Define variables and a constructor.
 
         FeedBinController controller;
+        SupervisorGuiController sgc;
 
         public SupervisorGUI()
         {
             InitializeComponent();
-                        
+            
+            // Give a name to the current thread for debuggind.
             Thread.CurrentThread.Name = "SupervisorThread";
+            
+            // Get the instance for the FeedBinController.
             controller = FeedBinController.getInstance();
 
             controller.BinListChangedEvent += updateValues;
+
+            // Define the controller for the interface.
+            sgc = SupervisorGuiController.getInstance();
+
+            // Subscribe to events from the controller.
 
 
         }
@@ -59,8 +69,19 @@ namespace FoodStuffsController
         /// Update the display data to the current data.
         /// </summary>
         private void updateDisplay() 
-        { 
-        
+        {
+            gvRecipe.DataSource = sgc.getRecipeDataTable();
+
+            for (int i = 0; i < gvRecipe.Columns.Count; i++)
+            {
+                gvRecipe.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                gvRecipe.Columns[i].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            }
+            // Set the last column to size Fill
+            gvRecipe.Columns[gvRecipe.Columns.Count -1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            // Resize rows
+            gvRecipe.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         /// <summary>
@@ -78,6 +99,11 @@ namespace FoodStuffsController
 
                 binChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
                 binChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+
+                binChart.ChartAreas[0].AxisY.Title = "Capacity";
+                binChart.ChartAreas[0].AxisY.LabelStyle.Enabled = true;
+                binChart.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
+
 
                 foreach (FeedBin bin in controller.getBins()) 
                 {
@@ -112,15 +138,26 @@ namespace FoodStuffsController
         //___________________________________________________
         // Action Listeners for the GUI functions..
 
-        private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
+        
 
         private void SupervisorGUI_Shown(object sender, EventArgs e)
         {
             updateValues();
         }
 
+        private void btnNewRecipe_Click(object sender, EventArgs e)
+        {
+            sgc.newRecipe();
+        }
+
+        private void btnBatch_Click(object sender, EventArgs e)
+        {
+            sgc.batch();
+        }
+        
+        private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

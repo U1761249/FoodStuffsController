@@ -40,9 +40,11 @@ namespace FoodStuffsController
         public ControllerGUI()
         {
             InitializeComponent();
+
+            // Give a name to the current thread for debuggind.
             Thread.CurrentThread.Name = "ControllerThread";
 
-            // Set the currentBin to the first bin in the controller list.
+            // Get the instance for the FeedBinController.
             controller = FeedBinController.getInstance();
 
             // Run the updateValues() function when the bin list changes.

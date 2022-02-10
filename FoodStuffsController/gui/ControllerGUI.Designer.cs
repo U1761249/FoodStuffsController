@@ -31,11 +31,11 @@ namespace FoodStuffsController
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnChange = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnEmpty = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.idBin = new System.Windows.Forms.Label();
             this.pbCapacity = new System.Windows.Forms.ProgressBar();
@@ -45,7 +45,7 @@ namespace FoodStuffsController
             this.lblProduct = new System.Windows.Forms.Label();
             this.cbBin = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnChange = new System.Windows.Forms.Button();
+            this.btnEmpty = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -90,16 +90,15 @@ namespace FoodStuffsController
             this.flowLayoutPanel2.Size = new System.Drawing.Size(140, 32);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
-            // btnAdd
+            // btnChange
             // 
-            this.btnAdd.Location = new System.Drawing.Point(3, 2);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(119, 19);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnChange.Location = new System.Drawing.Point(3, 3);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(119, 23);
+            this.btnChange.TabIndex = 0;
+            this.btnChange.Text = "Change Product";
+            this.btnChange.UseVisualStyleBackColor = true;
+            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -115,16 +114,16 @@ namespace FoodStuffsController
             this.flowLayoutPanel3.Size = new System.Drawing.Size(140, 32);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
-            // btnRemove
+            // btnAdd
             // 
-            this.btnRemove.Location = new System.Drawing.Point(3, 2);
-            this.btnRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(119, 19);
-            this.btnRemove.TabIndex = 0;
-            this.btnRemove.Text = "Remove";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnAdd.Location = new System.Drawing.Point(3, 2);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(119, 19);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // flowLayoutPanel4
             // 
@@ -140,16 +139,16 @@ namespace FoodStuffsController
             this.flowLayoutPanel4.Size = new System.Drawing.Size(140, 32);
             this.flowLayoutPanel4.TabIndex = 3;
             // 
-            // btnEmpty
+            // btnRemove
             // 
-            this.btnEmpty.Location = new System.Drawing.Point(3, 2);
-            this.btnEmpty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnEmpty.Name = "btnEmpty";
-            this.btnEmpty.Size = new System.Drawing.Size(119, 19);
-            this.btnEmpty.TabIndex = 0;
-            this.btnEmpty.Text = "Flush Bin";
-            this.btnEmpty.UseVisualStyleBackColor = true;
-            this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
+            this.btnRemove.Location = new System.Drawing.Point(3, 2);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(119, 19);
+            this.btnRemove.TabIndex = 0;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -167,7 +166,7 @@ namespace FoodStuffsController
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 2);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.RowCount = 5;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11117F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.2229F));
@@ -252,15 +251,16 @@ namespace FoodStuffsController
             this.flowLayoutPanel1.Size = new System.Drawing.Size(140, 34);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
-            // btnChange
+            // btnEmpty
             // 
-            this.btnChange.Location = new System.Drawing.Point(3, 3);
-            this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(119, 23);
-            this.btnChange.TabIndex = 0;
-            this.btnChange.Text = "Change Product";
-            this.btnChange.UseVisualStyleBackColor = true;
-            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
+            this.btnEmpty.Location = new System.Drawing.Point(3, 2);
+            this.btnEmpty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEmpty.Name = "btnEmpty";
+            this.btnEmpty.Size = new System.Drawing.Size(119, 19);
+            this.btnEmpty.TabIndex = 0;
+            this.btnEmpty.Text = "Flush Bin";
+            this.btnEmpty.UseVisualStyleBackColor = true;
+            this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
             // 
             // ControllerGUI
             // 
@@ -269,7 +269,7 @@ namespace FoodStuffsController
             this.ClientSize = new System.Drawing.Size(146, 302);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ControllerGUI";
-            this.Text = "Form1";
+            this.Text = "Controller";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ControllerGUI_FormClosed);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
