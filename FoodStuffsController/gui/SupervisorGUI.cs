@@ -76,7 +76,14 @@ namespace FoodStuffsController
                     s.ChartType = SeriesChartType.Column;
                     s.Enabled = true;
                     s.YValueMembers = "Capacity";
-                    s.Label = $"{bin.getVolumePercentage()}%";
+
+                    // Change the label based on capacity
+                    double volume = bin.getVolumePercentage();
+                    if (volume == 0) { s.Label = "EMPTY"; }
+                    else if (volume == 100) { s.Label = "FULL"; }
+                    else { s.Label = $"{volume}%"; }
+
+                    
 
 
                     s.Points.Add(new DataPoint(binNo, bin.getVolumePercentage()));
