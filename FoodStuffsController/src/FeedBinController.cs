@@ -1,4 +1,5 @@
 ﻿using FoodStuffs_Control_System.src;
+using FoodStuffsController.sql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,10 +28,15 @@ namespace FoodStuffsController.src
         private List<FeedBin> bins;
         private List<Recipe> recipes;
 
+        private DBConn dbconn;
+
         private readonly object _LOCKED = new object();
 
         private FeedBinController()
         {
+            dbconn = new DBConn();
+            dbconn.queryDatabase("Test");
+
             bins = new List<FeedBin>();
             recipes = new List<Recipe>();
             PopulateBins();

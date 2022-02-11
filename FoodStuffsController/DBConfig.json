@@ -1,5 +1,5 @@
 ﻿{
-  "hostname": "selene.hud.ac.uk",
+  "hostname": "jdbc:mysql://selene.hud.ac.uk:3306/",
   "database": "u1761249",
   "username": "u1761249",
   "password": "AB07oct21ab"
