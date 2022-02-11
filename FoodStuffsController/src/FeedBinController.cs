@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace FoodStuffsController.src
 {
@@ -25,6 +26,8 @@ namespace FoodStuffsController.src
         private static FeedBinController instance;
         private List<FeedBin> bins;
         private List<Recipe> recipes;
+
+        private readonly object _LOCKED = new object();
 
         private FeedBinController()
         {
@@ -55,10 +58,14 @@ namespace FoodStuffsController.src
         /// </summary>
         private void PopulateBins()
         {
-            AddBin(new FeedBin(1, "Wheaty Bits"));
-            AddBin(new FeedBin(2, "Meaty Bits"));
-            AddBin(new FeedBin(3, "Gravy Bits"));
-
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                AddBin(new FeedBin(1, "Wheaty Bits"));
+                AddBin(new FeedBin(2, "Meaty Bits"));
+                AddBin(new FeedBin(3, "Gravy Bits"));
+            }
+            finally { Monitor.Exit(_LOCKED); }
             //TODO: Make this pull from the database.
         }
         /// <summary>
@@ -66,32 +73,32 @@ namespace FoodStuffsController.src
         /// </summary>
         private void PopulateRecipes()
         {
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                Recipe r1 = new Recipe("Recipe 1");
+                r1.addIngredient(new RecipeIngredient("Wheaty Bits", 50));
+                r1.addIngredient(new RecipeIngredient("Gravy Bits", 50));
 
-            Recipe r1 = new Recipe("Recipe 1");
-            r1.addIngredient(new RecipeIngredient("Wheaty Bits", 50));
-            r1.addIngredient(new RecipeIngredient("Gravy Bits", 50));
+                Recipe r2 = new Recipe("Recipe 2");
+                r2.addIngredient(new RecipeIngredient("Meaty Bits", 35));
+                r2.addIngredient(new RecipeIngredient("Gravy Bits", 65));
 
+                Recipe r3 = new Recipe("Recipe 3");
+                r3.addIngredient(new RecipeIngredient("Wheaty Bits", 20));
+                r3.addIngredient(new RecipeIngredient("Meaty Bits", 20));
+                r3.addIngredient(new RecipeIngredient("Gravy Bits", 60));
 
-            Recipe r2 = new Recipe("Recipe 2");
-            r2.addIngredient(new RecipeIngredient("Meaty Bits", 35));
-            r2.addIngredient(new RecipeIngredient("Gravy Bits", 65));
+                Recipe r4 = new Recipe("Recipe 4");
+                r4.addIngredient(new RecipeIngredient("Meaty Bits", 35));
+                r4.addIngredient(new RecipeIngredient("Tasty Bits", 65));
 
-
-
-            Recipe r3 = new Recipe("Recipe 3");
-            r3.addIngredient(new RecipeIngredient("Wheaty Bits", 20));
-            r3.addIngredient(new RecipeIngredient("Meaty Bits", 20));
-            r3.addIngredient(new RecipeIngredient("Gravy Bits", 60));
-
-            Recipe r4 = new Recipe("Recipe 4");
-            r4.addIngredient(new RecipeIngredient("Meaty Bits", 35));
-            r4.addIngredient(new RecipeIngredient("Tasty Bits", 65));
-
-            recipes.Add(r1);
-            recipes.Add(r2);
-            recipes.Add(r3);
-            recipes.Add(r4);
-
+                recipes.Add(r1);
+                recipes.Add(r2);
+                recipes.Add(r3);
+                recipes.Add(r4);
+            }
+            finally { Monitor.Exit(_LOCKED); }
             //TODO: Make this pull from the database.
         }
 
@@ -107,14 +114,24 @@ namespace FoodStuffsController.src
         /// <param name="bin"></param>
         private void AddBin(FeedBin bin)
         {
-            bins.Add(bin);
-            bin.VariableChangedEvent += BinVariableChanged;
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                bins.Add(bin);
+                bin.VariableChangedEvent += BinVariableChanged;
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         private void AddRecipe(Recipe recipe)
         {
-            recipes.Add(recipe);
-            recipe.VariableChangedEvent += RecipeVariableChanged;
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                recipes.Add(recipe);
+                recipe.VariableChangedEvent += RecipeVariableChanged;
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         /// <summary>
@@ -143,7 +160,10 @@ namespace FoodStuffsController.src
         /// Get the bins list.
         /// </summary>
         /// <returns></returns>
-        public List<FeedBin> getBins() { return bins; }
+        public List<FeedBin> getBins()
+        {
+            return bins;
+        }
 
         /// <summary>
         /// Override the bins list with a new list.
@@ -151,26 +171,41 @@ namespace FoodStuffsController.src
         /// <param name="newBins"></param>
         public void setBins(List<FeedBin> newBins)
         {
-            bins = newBins;
-            BinListChangedEvent(this, null);
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                bins = newBins;
+                BinListChangedEvent(this, null);
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         public List<Recipe> getRecipes() { return recipes; }
 
         public void setRecipse(List<Recipe> newRecipes)
         {
-            recipes = newRecipes;
-            RecipeListChangedEvent(this, null);
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                recipes = newRecipes;
+                RecipeListChangedEvent(this, null);
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         public List<string> getRecipeList()
         {
-            List<string> recipeStrings = new List<string>();
-            foreach (Recipe r in recipes)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                recipeStrings.Add(r.RecipeName);
+                List<string> recipeStrings = new List<string>();
+                foreach (Recipe r in recipes)
+                {
+                    recipeStrings.Add(r.RecipeName);
+                }
+                return recipeStrings;
             }
-            return recipeStrings;
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         /// <summary>
@@ -179,94 +214,113 @@ namespace FoodStuffsController.src
         /// <returns></returns>
         public List<string> StringBins()
         {
-            List<string> strings = new List<string>();
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                List<string> strings = new List<string>();
 
-            SortByBinNo();
-            foreach (FeedBin bin in bins) { strings.Add(bin.ToString()); }
+                foreach (FeedBin bin in bins) { strings.Add(bin.ToString()); }
 
-            return strings;
+                return strings;
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         public DataTable getBinsDataTable()
         {
-            DataTable dt = new DataTable();
-            dt.Clear();
-            dt.Columns.Add("BinNo");
-            dt.Columns.Add("Product");
-            dt.Columns.Add("CurrentVolume");
-            dt.Columns.Add("MaxVolume");
-
-            foreach (FeedBin bin in bins)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                DataRow row = dt.NewRow();
-                row["BinNo"] = bin.getBinNumber();
-                row["Product"] = bin.getProductName();
-                row["CurrentVolume"] = bin.getCurrentVolume();
-                row["MaxVolume"] = bin.getMaxVolume();
+                DataTable dt = new DataTable();
+                dt.Clear();
+                dt.Columns.Add("BinNo");
+                dt.Columns.Add("Product");
+                dt.Columns.Add("CurrentVolume");
+                dt.Columns.Add("MaxVolume");
 
-                dt.Rows.Add(row);
+                foreach (FeedBin bin in bins)
+                {
+                    DataRow row = dt.NewRow();
+                    row["BinNo"] = bin.getBinNumber();
+                    row["Product"] = bin.getProductName();
+                    row["CurrentVolume"] = bin.getCurrentVolume();
+                    row["MaxVolume"] = bin.getMaxVolume();
+
+                    dt.Rows.Add(row);
+                }
+
+                return dt;
             }
-
-            return dt;
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         public DataTable getRecipeDataTable()
         {
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add("Product");
-            dt.Columns.Add("Ingredients");
-            dt.Columns.Add("BatchMax");
-
-            foreach (Recipe recipe in recipes)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                string message = "";
+                DataTable dt = new DataTable();
 
-                DataRow row = dt.NewRow();
-                // Get the recipe name.
-                row["Product"] = recipe.RecipeName;
-                // Get a list of ingredients and ratios.
-                row["Ingredients"] = recipe.getIngredientString();
-                // Get the maximum size of a batch - rounded to 2dp
-                row["BatchMax"] = Math.Round(getMaxBatch(recipe, ref message), 2) + "mᶟ";
+                dt.Columns.Add("Product");
+                dt.Columns.Add("Ingredients");
+                dt.Columns.Add("BatchMax");
 
-                dt.Rows.Add(row);
+                foreach (Recipe recipe in recipes)
+                {
+                    string message = "";
+
+                    DataRow row = dt.NewRow();
+                    // Get the recipe name.
+                    row["Product"] = recipe.RecipeName;
+                    // Get a list of ingredients and ratios.
+                    row["Ingredients"] = recipe.getIngredientString();
+                    // Get the maximum size of a batch - rounded to 2dp
+                    row["BatchMax"] = Math.Round(getMaxBatch(recipe, ref message), 2) + "mᶟ";
+
+                    dt.Rows.Add(row);
+                }
+
+                return dt;
             }
-
-            return dt;
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         private double getMaxBatch(Recipe recipe, ref string message)
         {
-            double maxBatch = double.PositiveInfinity;
-
-            foreach (RecipeIngredient ri in recipe.ingredients)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                FeedBin ingredientBin = FindByProduct(ri.ingredientName);
-                // Return 0 if there is an ingredient with no current bin.
-                if (ingredientBin == null)
-                {
-                    message = $"No bin contains product {ri.ingredientName}";
-                    return 0;
-                }
+                double maxBatch = double.PositiveInfinity;
 
-                double maxIngredient = (ingredientBin.getCurrentVolume() / ri.ingredientPercentage) * 100;
-                if (maxIngredient < maxBatch)
+                foreach (RecipeIngredient ri in recipe.ingredients)
                 {
-                    maxBatch = maxIngredient;
-
-                    if (maxBatch == 0)
+                    FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                    // Return 0 if there is an ingredient with no current bin.
+                    if (ingredientBin == null)
                     {
-                        message = $"The batch cannot be made, {ri.ingredientName} is missing.";
+                        message = $"No bin contains product {ri.ingredientName}";
+                        return 0;
                     }
-                    else
+
+                    double maxIngredient = (ingredientBin.getCurrentVolume() / ri.ingredientPercentage) * 100;
+                    if (maxIngredient < maxBatch)
                     {
-                        message = $"The batch size is limited to {maxBatch} by the availability of {ri.ingredientName}";
+                        maxBatch = maxIngredient;
+
+                        if (maxBatch == 0)
+                        {
+                            message = $"The batch cannot be made, {ri.ingredientName} is missing.";
+                        }
+                        else
+                        {
+                            message = $"The batch size is limited to {maxBatch} by the availability of {ri.ingredientName}";
+                        }
                     }
                 }
+                if (maxBatch == double.PositiveInfinity) maxBatch = 0;
+                return maxBatch;
             }
-            if (maxBatch == double.PositiveInfinity) maxBatch = 0;
-            return maxBatch;
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         /// <summary>
@@ -277,14 +331,19 @@ namespace FoodStuffsController.src
         /// <returns></returns>
         public bool canMake(string recipeName, double size, ref string message)
         {
-            Recipe found = recipes.Find(r => r.RecipeName == recipeName);
-            if (found == null)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                message = "The recipe could not be found.";
-                return false;
-            }
+                Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+                if (found == null)
+                {
+                    message = "The recipe could not be found.";
+                    return false;
+                }
 
-            return getMaxBatch(found, ref message) >= size;
+                return getMaxBatch(found, ref message) >= size;
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         /// <summary>
@@ -295,35 +354,41 @@ namespace FoodStuffsController.src
         /// <returns></returns>
         public bool makeBatch(string recipeName, double size)
         {
-            // Find the recipe from the recipes list.
-            Recipe found = recipes.Find(r => r.RecipeName == recipeName);
-            if (found == null)
+            Monitor.Enter(_LOCKED);
+            try
             {
-                return false;
-            }
 
-            // Loop over each ingredient in the recipe.
-            foreach (RecipeIngredient ri in found.ingredients)
-            {
-                // Find the bin that contains the recipe.
-                FeedBin ingredientBin = FindByProduct(ri.ingredientName);
-                // Stop if there is an ingredient with no current bin.
-                if (ingredientBin == null)
+                // Find the recipe from the recipes list.
+                Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+                if (found == null)
                 {
                     return false;
                 }
 
-                // Calculate and remove the correct portion of ingredient from the bin.
-                double toRemove = (size / 100) * ri.ingredientPercentage;
-                if (ingredientBin.removeProduct(toRemove) != toRemove)
+                // Loop over each ingredient in the recipe.
+                foreach (RecipeIngredient ri in found.ingredients)
                 {
-                    // One bin does not have enough ingredient. Stop making the batch.
-                    return false;
-                }
-            }
+                    // Find the bin that contains the recipe.
+                    FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                    // Stop if there is an ingredient with no current bin.
+                    if (ingredientBin == null)
+                    {
+                        return false;
+                    }
 
-            // The batch was successfully made.
-            return true;
+                    // Calculate and remove the correct portion of ingredient from the bin.
+                    double toRemove = (size / 100) * ri.ingredientPercentage;
+                    if (ingredientBin.removeProduct(toRemove) != toRemove)
+                    {
+                        // One bin does not have enough ingredient. Stop making the batch.
+                        return false;
+                    }
+                }
+
+                // The batch was successfully made.
+                return true;
+            }
+            finally { Monitor.Exit(_LOCKED); }
         }
 
         /// <summary>
@@ -351,41 +416,5 @@ namespace FoodStuffsController.src
             FeedBin found = bins.Find(bin => bin.getBinNumber() == binNo);
             return found;
         }
-
-        /// <summary>
-        /// Sort the bins in order of ID (Ascending)
-        /// </summary>
-        public void SortByBinNo()
-        {
-            bins.Sort((b1, b2) => b1.getBinNumber().CompareTo(b2.getBinNumber()));
-        }
-
-
-        /// <summary>
-        /// Sort the bins in order of Product Name (Ascending)
-        /// </summary>
-        public void SortByProduct()
-        {
-            bins.Sort((b1, b2) => b1.getProductName().CompareTo(b2.getProductName()));
-        }
-
-        /// <summary>
-        /// Sort the bins in order of Volume Percentage (Ascending)
-        /// </summary>
-        public void SortByPercentage()
-        {
-            bins.Sort((b1, b2) => b1.getVolumePercentage().CompareTo(b2.getVolumePercentage()));
-        }
-
-        /// <summary>
-        /// Update a bin within the bins list.
-        /// </summary>
-        /// <param name="updated"></param>
-        public void updateBin()
-        {
-            BinListChangedEvent(this, null);
-        }
-
-
     }
 }
