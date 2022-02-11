@@ -220,13 +220,15 @@ namespace FoodStuffsController.src
 
             foreach (Recipe recipe in recipes)
             {
+                string message = "";
+
                 DataRow row = dt.NewRow();
                 // Get the recipe name.
                 row["Product"] = recipe.RecipeName;
                 // Get a list of ingredients and ratios.
                 row["Ingredients"] = recipe.getIngredientString();
                 // Get the maximum size of a batch - rounded to 2dp
-                row["BatchMax"] = Math.Round(getMaxBatch(recipe), 2) + "mᶟ";
+                row["BatchMax"] = Math.Round(getMaxBatch(recipe, ref message), 2) + "mᶟ";
 
                 dt.Rows.Add(row);
             }
@@ -234,7 +236,7 @@ namespace FoodStuffsController.src
             return dt;
         }
 
-        private double getMaxBatch(Recipe recipe)
+        private double getMaxBatch(Recipe recipe, ref string message)
         {
             double maxBatch = double.PositiveInfinity;
 
@@ -242,10 +244,26 @@ namespace FoodStuffsController.src
             {
                 FeedBin ingredientBin = FindByProduct(ri.ingredientName);
                 // Return 0 if there is an ingredient with no current bin.
-                if (ingredientBin == null) return 0;
+                if (ingredientBin == null)
+                {
+                    message = $"No bin contains product {ri.ingredientName}";
+                    return 0;
+                }
 
                 double maxIngredient = (ingredientBin.getCurrentVolume() / ri.ingredientPercentage) * 100;
-                if (maxIngredient < maxBatch) { maxBatch = maxIngredient; }
+                if (maxIngredient < maxBatch)
+                {
+                    maxBatch = maxIngredient;
+
+                    if (maxBatch == 0)
+                    {
+                        message = $"The batch cannot be made, {ri.ingredientName} is missing.";
+                    }
+                    else
+                    {
+                        message = $"The batch size is limited to {maxBatch} by the availability of {ri.ingredientName}";
+                    }
+                }
             }
             if (maxBatch == double.PositiveInfinity) maxBatch = 0;
             return maxBatch;
@@ -257,12 +275,55 @@ namespace FoodStuffsController.src
         /// <param name="recipeName"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public bool canMake(string recipeName, double size)
+        public bool canMake(string recipeName, double size, ref string message)
         {
             Recipe found = recipes.Find(r => r.RecipeName == recipeName);
-            if (found == null) return false;
+            if (found == null)
+            {
+                message = "The recipe could not be found.";
+                return false;
+            }
 
-            return getMaxBatch(found) >= size;
+            return getMaxBatch(found, ref message) >= size;
+        }
+
+        /// <summary>
+        /// Make a batch of the given recipe to the specified size.
+        /// </summary>
+        /// <param name="recipeName"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public bool makeBatch(string recipeName, double size)
+        {
+            // Find the recipe from the recipes list.
+            Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+            if (found == null)
+            {
+                return false;
+            }
+
+            // Loop over each ingredient in the recipe.
+            foreach (RecipeIngredient ri in found.ingredients)
+            {
+                // Find the bin that contains the recipe.
+                FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                // Stop if there is an ingredient with no current bin.
+                if (ingredientBin == null)
+                {
+                    return false;
+                }
+
+                // Calculate and remove the correct portion of ingredient from the bin.
+                double toRemove = (size / 100) * ri.ingredientPercentage;
+                if (ingredientBin.removeProduct(toRemove) != toRemove)
+                {
+                    // One bin does not have enough ingredient. Stop making the batch.
+                    return false;
+                }
+            }
+
+            // The batch was successfully made.
+            return true;
         }
 
         /// <summary>

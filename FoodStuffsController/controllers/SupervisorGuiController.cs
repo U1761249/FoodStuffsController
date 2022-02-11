@@ -42,12 +42,18 @@ namespace FoodStuffsController.controllers
             KeyValuePair<string, double> batchInfo = new KeyValuePair<string, double>("", 0);
             if (PopupBoxes.MakeBatch(ref batchInfo, controller.getRecipeList()) == DialogResult.OK)
             {
-                if (controller.canMake(batchInfo.Key, batchInfo.Value))
+                if (batchInfo.Value <= 0)
                 {
-                    PopupBoxes.ShowError("Valid Batch", "The batch can be made.", MessageBoxIcon.Information);
-
+                    PopupBoxes.ShowError("Invalid Argument", "The specified quanitiy to make was invalid");
+                    return;
                 }
-                else PopupBoxes.ShowError("Invalid Batch", "The batch cannot be made.", MessageBoxIcon.Information);
+
+                string message = "";
+                if (controller.canMake(batchInfo.Key, batchInfo.Value, ref message))
+                {
+                    bool success = controller.makeBatch(batchInfo.Key, batchInfo.Value);
+                }
+                else PopupBoxes.ShowError("Invalid Batch", message, MessageBoxIcon.Information);
             }
         }
 

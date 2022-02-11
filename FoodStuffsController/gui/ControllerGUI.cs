@@ -18,9 +18,11 @@ namespace FoodStuffsController
     public partial class ControllerGUI : Form
     {
 
+        // Define a delegate to use BeginInvoke to update values using the thread it was created on.
+        public delegate void InvokeDelegate();
+
         //___________________________________________________
         // Define variables and a constructor.
-
 
 
         FeedBinController controller;
@@ -56,11 +58,11 @@ namespace FoodStuffsController
 
             // Subscribe to events from the controller.
             cgc.CurrentBinUpdate += updateValues;
-                        
+
             binStrings = controller.StringBins();
             cbBin.DataSource = binStrings;
             cbBin.SelectedIndex = 0;
-            
+
             updateValues();
 
             automatedChange = false;
@@ -77,6 +79,18 @@ namespace FoodStuffsController
         /// <param name="sender">Required for events (Unused)</param>
         /// <param name="e">Required for events (Unused)</param>
         private void updateValues(object sender = null, EventArgs e = null)
+        {
+            try
+            {
+                // Invoke the updateDisplay method to prevent cross-thread access to display properties.
+                tableLayoutPanel1.BeginInvoke(new InvokeDelegate(updateDisplay));
+            }
+            catch (Exception err) { }
+
+
+        }
+
+        private void updateDisplay()
         {
             //Set the text values for the product name and current volume.
             this.lblProduct.Text = cgc.currentBin.getProductName();
@@ -102,7 +116,6 @@ namespace FoodStuffsController
 
                 automatedChange = false;
             }
-
         }
 
 
@@ -174,6 +187,6 @@ namespace FoodStuffsController
             Application.Exit();
         }
 
-        
+
     }
 }
