@@ -24,7 +24,7 @@ namespace FoodStuffsController.controllers
             if (instance == null) instance = new SupervisorGuiController();
             return instance;
         }
-        private SupervisorGuiController() 
+        private SupervisorGuiController()
         {
             controller = FeedBinController.getInstance();
         }
@@ -32,17 +32,22 @@ namespace FoodStuffsController.controllers
         public DataTable getRecipeDataTable() { return controller.getRecipeDataTable(); }
 
 
-        public void newRecipe() 
+        public void newRecipe()
         {
-            
+
         }
 
-        public void batch() 
-        { 
-        KeyValuePair<string, double> batchInfo = new KeyValuePair<string, double>("", 0);
-            if (PopupBoxes.MakeBatch(ref batchInfo, controller.getRecipeList()) == DialogResult.OK) 
+        public void batch()
+        {
+            KeyValuePair<string, double> batchInfo = new KeyValuePair<string, double>("", 0);
+            if (PopupBoxes.MakeBatch(ref batchInfo, controller.getRecipeList()) == DialogResult.OK)
             {
-                PopupBoxes.ShowError(batchInfo.Value.ToString(), batchInfo.Key, MessageBoxIcon.Information);
+                if (controller.canMake(batchInfo.Key, batchInfo.Value))
+                {
+                    PopupBoxes.ShowError("Valid Batch", "The batch can be made.", MessageBoxIcon.Information);
+
+                }
+                else PopupBoxes.ShowError("Invalid Batch", "The batch cannot be made.", MessageBoxIcon.Information);
             }
         }
 

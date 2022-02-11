@@ -64,7 +64,7 @@ namespace FoodStuffsController.src
         /// <summary>
         /// Populate the recipes with initial values.
         /// </summary>
-        private void PopulateRecipes() 
+        private void PopulateRecipes()
         {
 
             Recipe r1 = new Recipe("Recipe 1");
@@ -105,13 +105,13 @@ namespace FoodStuffsController.src
         /// Subscribe the BinListChangedEvent to the bin VariableChangedEvent.
         /// </summary>
         /// <param name="bin"></param>
-        private void AddBin(FeedBin bin) 
+        private void AddBin(FeedBin bin)
         {
             bins.Add(bin);
             bin.VariableChangedEvent += BinVariableChanged;
         }
 
-        private void AddRecipe(Recipe recipe) 
+        private void AddRecipe(Recipe recipe)
         {
             recipes.Add(recipe);
             recipe.VariableChangedEvent += RecipeVariableChanged;
@@ -122,9 +122,9 @@ namespace FoodStuffsController.src
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BinVariableChanged(object sender = null, EventArgs e = null) 
-        { 
-            BinListChangedEvent(this, null); 
+        private void BinVariableChanged(object sender = null, EventArgs e = null)
+        {
+            BinListChangedEvent(this, null);
         }
 
         private void RecipeVariableChanged(object sender = null, EventArgs e = null)
@@ -149,24 +149,24 @@ namespace FoodStuffsController.src
         /// Override the bins list with a new list.
         /// </summary>
         /// <param name="newBins"></param>
-        public void setBins(List<FeedBin> newBins) 
-        { 
+        public void setBins(List<FeedBin> newBins)
+        {
             bins = newBins;
             BinListChangedEvent(this, null);
         }
 
         public List<Recipe> getRecipes() { return recipes; }
 
-        public void setRecipse(List<Recipe> newRecipes) 
+        public void setRecipse(List<Recipe> newRecipes)
         {
             recipes = newRecipes;
             RecipeListChangedEvent(this, null);
         }
 
-        public List<string> getRecipeList() 
+        public List<string> getRecipeList()
         {
             List<string> recipeStrings = new List<string>();
-            foreach (Recipe r in recipes) 
+            foreach (Recipe r in recipes)
             {
                 recipeStrings.Add(r.RecipeName);
             }
@@ -187,7 +187,7 @@ namespace FoodStuffsController.src
             return strings;
         }
 
-        public DataTable getBinsDataTable() 
+        public DataTable getBinsDataTable()
         {
             DataTable dt = new DataTable();
             dt.Clear();
@@ -196,7 +196,7 @@ namespace FoodStuffsController.src
             dt.Columns.Add("CurrentVolume");
             dt.Columns.Add("MaxVolume");
 
-            foreach (FeedBin bin in bins) 
+            foreach (FeedBin bin in bins)
             {
                 DataRow row = dt.NewRow();
                 row["BinNo"] = bin.getBinNumber();
@@ -234,11 +234,11 @@ namespace FoodStuffsController.src
             return dt;
         }
 
-        private double getMaxBatch(Recipe recipe) 
+        private double getMaxBatch(Recipe recipe)
         {
             double maxBatch = double.PositiveInfinity;
 
-            foreach (RecipeIngredient ri in recipe.ingredients) 
+            foreach (RecipeIngredient ri in recipe.ingredients)
             {
                 FeedBin ingredientBin = FindByProduct(ri.ingredientName);
                 // Return 0 if there is an ingredient with no current bin.
@@ -251,6 +251,19 @@ namespace FoodStuffsController.src
             return maxBatch;
         }
 
+        /// <summary>
+        /// Calculate if the recipe can be made at the desired size.
+        /// </summary>
+        /// <param name="recipeName"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public bool canMake(string recipeName, double size)
+        {
+            Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+            if (found == null) return false;
+
+            return getMaxBatch(found) >= size;
+        }
 
         /// <summary>
         /// Search the list for a bin containing a product with the given name.
