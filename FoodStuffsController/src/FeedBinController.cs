@@ -93,27 +93,30 @@ namespace FoodStuffsController.src
             Monitor.Enter(_LOCKED);
             try
             {
-                Recipe r1 = new Recipe("Recipe 1");
-                r1.addIngredient(new RecipeIngredient("Wheaty Bits", 50));
-                r1.addIngredient(new RecipeIngredient("Gravy Bits", 50));
+                DataTable recipeTable = dbconn.queryDatabase("SELECT productName, prodName, volume from recipe left join recipeIngredients on recipe.recipeID = recipeIngredients.recipeID left join products on recipeIngredients.prodNo = products.prodNo");
 
-                Recipe r2 = new Recipe("Recipe 2");
-                r2.addIngredient(new RecipeIngredient("Meaty Bits", 35));
-                r2.addIngredient(new RecipeIngredient("Gravy Bits", 65));
+                Recipe currentRecipe = null;
 
-                Recipe r3 = new Recipe("Recipe 3");
-                r3.addIngredient(new RecipeIngredient("Wheaty Bits", 20));
-                r3.addIngredient(new RecipeIngredient("Meaty Bits", 20));
-                r3.addIngredient(new RecipeIngredient("Gravy Bits", 60));
+                for (int r = 0; r < recipeTable.Rows.Count; r++)
+                {
 
-                Recipe r4 = new Recipe("Recipe 4");
-                r4.addIngredient(new RecipeIngredient("Meaty Bits", 35));
-                r4.addIngredient(new RecipeIngredient("Tasty Bits", 65));
+                    string productName = recipeTable.Rows[r][0].ToString();
+                    string ingredientName = recipeTable.Rows[r][1].ToString();
+                    double volume = Convert.ToDouble(recipeTable.Rows[r][2].ToString());
 
-                recipes.Add(r1);
-                recipes.Add(r2);
-                recipes.Add(r3);
-                recipes.Add(r4);
+                    if (currentRecipe == null) { currentRecipe = new Recipe(productName);  }
+                    
+                    else if (currentRecipe.RecipeName != productName) 
+                    {
+                        AddRecipe(currentRecipe);
+                        currentRecipe = new Recipe(productName); 
+                    }
+                                        
+                    currentRecipe.addIngredient(new RecipeIngredient(ingredientName, volume));
+                    
+                }
+                AddRecipe(currentRecipe);
+
             }
             finally { Monitor.Exit(_LOCKED); }
             //TODO: Make this pull from the database.
