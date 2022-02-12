@@ -28,13 +28,13 @@ namespace FoodStuffsController.src
         private List<FeedBin> bins;
         private List<Recipe> recipes;
 
-        private DBConn dbconn;
+        private DBManager dbconn;
 
         private readonly object _LOCKED = new object();
 
         private FeedBinController()
         {
-            dbconn = new DBConn();
+            dbconn = new DBManager();
             dbconn.queryDatabase("Test");
 
             bins = new List<FeedBin>();
