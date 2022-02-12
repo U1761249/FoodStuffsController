@@ -1,4 +1,5 @@
 ﻿using FoodStuffs_Control_System.src;
+using FoodStuffsController.gui.MessageBoxes;
 using FoodStuffsController.sql;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,6 @@ namespace FoodStuffsController.src
         private FeedBinController()
         {
             dbconn = new DBManager();
-            dbconn.queryDatabase("Test");
 
             bins = new List<FeedBin>();
             recipes = new List<Recipe>();
@@ -67,9 +67,20 @@ namespace FoodStuffsController.src
             Monitor.Enter(_LOCKED);
             try
             {
-                AddBin(new FeedBin(1, "Wheaty Bits"));
-                AddBin(new FeedBin(2, "Meaty Bits"));
-                AddBin(new FeedBin(3, "Gravy Bits"));
+
+                DataTable binTable = dbconn.queryDatabase("SELECT binNo, prodName, currentVolume, maxVolume from bins left join products on bins.prodNo = products.prodNo");
+
+                for (int r = 0; r < binTable.Rows.Count; r++) 
+                {
+                    int binNo = Convert.ToInt32(binTable.Rows[r][0].ToString());
+                    string productName = binTable.Rows[r][1].ToString();
+                    double curVol = Convert.ToDouble(binTable.Rows[r][2].ToString());
+                    double maxVol = Convert.ToDouble(binTable.Rows[r][3].ToString());
+
+                    FeedBin newBin = new FeedBin(binNo, productName, curVol, maxVol);
+                    AddBin(newBin);
+                }
+
             }
             finally { Monitor.Exit(_LOCKED); }
             //TODO: Make this pull from the database.

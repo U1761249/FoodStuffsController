@@ -66,12 +66,12 @@ namespace FoodStuffs_Control_System.src
         /// </summary>
         /// <param name="binNo">Unique number for a bin.</param>
         /// <param name="prodName">Name of the product within a bin.</param>
-        public FeedBin(int binNo, string prodName)
+        public FeedBin(int binNo, string prodName, double currentVolume = 0, double maxVolume = 40)
         {
-            binNumber = binNo;          // bin identifier
-            productName = prodName;     // product in bin
-            maxVolume = 40.0;           // maximum capacity in cubic metres
-            currentVolume = 0.0;        // bin starts in the empty state
+            this.binNumber = binNo;          // bin identifier
+            this.productName = prodName;     // product in bin
+            this.maxVolume = maxVolume;           // maximum capacity in cubic metres, default is 40
+            this.currentVolume = currentVolume;        // current bin capacity, default is 0
 
             ignoreUpdateEvent = false;  // Start listening to the VariableUpdateEvent after construction.
         }
