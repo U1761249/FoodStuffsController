@@ -74,7 +74,9 @@ namespace FoodStuffs_Control_System.src
             this.currentVolume = currentVolume;        // current bin capacity, default is 0
 
             ignoreUpdateEvent = false;  // Start listening to the VariableUpdateEvent after construction.
+
         }
+
 
 
 

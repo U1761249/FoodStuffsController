@@ -166,6 +166,8 @@ namespace FoodStuffsController.src
         /// <param name="e"></param>
         private void BinVariableChanged(object sender = null, EventArgs e = null)
         {
+            UpdateDatabase((FeedBin) sender);
+
             BinListChangedEvent(this, null);
         }
 
@@ -178,7 +180,53 @@ namespace FoodStuffsController.src
         //___________________________________________________
         // Define class functionalty.
 
+        private void UpdateDatabase(FeedBin bin) 
+        {
+            string hasProductQuery = $"SELECT * FROM products WHERE prodName = '{bin.getProductName()}'";
+            string hasBinQuery = $"SELECT * FROM bins WHERE binNo = {bin.getBinNumber()}";
+            string insertProductQuery = $"INSERT INTO products (prodName) VALUES('{bin.getProductName()}')";
+            string insertQuery = $"" +
+                $"INSERT INTO bins (prodNo, currentVolume, maxVolume) values " +
+                $"((SELECT prodNo FROM products WHERE prodName = '{bin.getProductName()}'), {bin.getCurrentVolume()}, {bin.getMaxVolume()});";
+            
+                string updateQuery = $"" +
+                $"Update bins SET prodNo = " +
+                $"(SELECT prodNo FROM products WHERE prodName = '{bin.getProductName()}'), " +
+                $"currentVolume = {bin.getCurrentVolume()} WHERE binNo = {bin.getBinNumber()};";
 
+            bool hasProduct = dbconn.databaseContains(hasProductQuery);
+
+            if (!hasProduct) 
+            {
+                // Add the new product to the database.
+                hasProduct = dbconn.updateDatabase(insertProductQuery);                
+            }
+            // Check again in case the database could not be updated.
+            if (!hasProduct)
+            {
+                // Notify the user if a product was not added to the bin.
+                PopupBoxes.ShowError("Database Update Error", $"An unexpected error prevented {bin.getProductName()} from being added to the database.");
+            }
+            else 
+            {
+                bool success;
+                // Insert a new bin if one does not exist with the current bin number.
+                if (!dbconn.databaseContains(hasBinQuery)) 
+                {
+                    success = dbconn.updateDatabase(insertQuery);
+                }
+                // Update the bin with the new values.
+                else 
+                { 
+                success = dbconn.updateDatabase(updateQuery);
+                }                
+
+                if (!success) 
+                {
+                    PopupBoxes.ShowError("Database Update Error", $"An unexpected error prevented changes to bin {bin.getBinNumber()} from being made to the database.");
+                }
+            }
+        }
 
         //Functions to manipulate the bins list.
         /// <summary>
