@@ -68,7 +68,10 @@ namespace FoodStuffsController.src
             try
             {
 
-                DataTable binTable = dbconn.queryDatabase("SELECT binNo, prodName, currentVolume, maxVolume from bins left join products on bins.prodNo = products.prodNo");
+                DataTable binTable = dbconn.queryDatabase(
+                    "SELECT binNo, prodName, currentVolume, maxVolume from bins " +
+                    "left join products on bins.prodNo = products.prodNo"
+                    );
 
                 for (int r = 0; r < binTable.Rows.Count; r++) 
                 {
@@ -83,7 +86,6 @@ namespace FoodStuffsController.src
 
             }
             finally { Monitor.Exit(_LOCKED); }
-            //TODO: Make this pull from the database.
         }
         /// <summary>
         /// Populate the recipes with initial values.
@@ -93,7 +95,11 @@ namespace FoodStuffsController.src
             Monitor.Enter(_LOCKED);
             try
             {
-                DataTable recipeTable = dbconn.queryDatabase("SELECT productName, prodName, volume from recipe left join recipeIngredients on recipe.recipeID = recipeIngredients.recipeID left join products on recipeIngredients.prodNo = products.prodNo");
+                DataTable recipeTable = dbconn.queryDatabase(
+                    "SELECT productName, prodName, volume from recipe " +
+                    "left join recipeIngredients on recipe.recipeID = recipeIngredients.recipeID " +
+                    "left join products on recipeIngredients.prodNo = products.prodNo"
+                    );
 
                 Recipe currentRecipe = null;
 
@@ -119,7 +125,6 @@ namespace FoodStuffsController.src
 
             }
             finally { Monitor.Exit(_LOCKED); }
-            //TODO: Make this pull from the database.
         }
 
 

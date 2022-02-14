@@ -63,7 +63,7 @@ namespace FoodStuffsController
             cbBin.DataSource = binStrings;
             cbBin.SelectedIndex = 0;
 
-            updateValues();
+            updateDisplay();
 
             automatedChange = false;
 
