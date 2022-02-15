@@ -18,6 +18,8 @@ namespace FoodStuffsController.sql
         private string username { get; }
         private string password { get; }
 
+        private string connectionString;
+
         public DBManager()
         {
             List<string> data = SQLConnectionSettings.getConnection();
@@ -28,7 +30,7 @@ namespace FoodStuffsController.sql
             this.username = data[3];
             this.password = data[4];
 
-            string connectionString = $"server = {hostname}; port = {port}; database = {database}; user = {username}; password = {password};";
+            connectionString = $"server = {hostname}; port = {port}; database = {database}; user = {username}; password = {password};";
 
             conn = new MySqlConnection(connectionString);
         }
@@ -45,6 +47,8 @@ namespace FoodStuffsController.sql
             DataTable result = new DataTable();
             try
             {
+                conn = new MySqlConnection(connectionString);
+
                 conn.Open();
 
                 cmd = new MySqlCommand(query, conn);
@@ -56,9 +60,9 @@ namespace FoodStuffsController.sql
 
                 da.Dispose();
 
-                conn.Close();
             }
             catch (Exception err) { PopupBoxes.ShowError("SQL Error", "There was an error connecting to the databsae."); }
+            conn.Close();
             return result;
         }
 
@@ -73,6 +77,8 @@ namespace FoodStuffsController.sql
             bool updateSuccess = false;
             try
             {
+                conn = new MySqlConnection(connectionString);
+
                 conn.Open();
 
                 cmd = new MySqlCommand(query, conn);
@@ -80,9 +86,10 @@ namespace FoodStuffsController.sql
                 int result = cmd.ExecuteNonQuery();
                 updateSuccess = result > 0;
 
-                conn.Close();
+
             }
             catch (Exception err) { PopupBoxes.ShowError("SQL Error", "There was an error connecting to the databsae."); }
+            conn.Close();
             return updateSuccess;
         }
 
@@ -91,22 +98,25 @@ namespace FoodStuffsController.sql
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public bool databaseContains(string query) 
+        public bool databaseContains(string query)
         {
             bool updateSuccess = false;
             try
             {
+                conn = new MySqlConnection(connectionString);
+
                 conn.Open();
 
                 cmd = new MySqlCommand(query, conn);
 
-                int result = (int)cmd.ExecuteScalar();
+                var output = cmd.ExecuteScalar();
+                if (output == null) return false;
+                int result = (int)output;
 
                 updateSuccess = result > 0;
-
-                conn.Close();
             }
             catch (Exception err) { PopupBoxes.ShowError("SQL Error", "There was an error connecting to the databsae."); }
+            conn.Close();
             return updateSuccess;
         }
     }

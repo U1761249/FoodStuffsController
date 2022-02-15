@@ -32,8 +32,6 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gvRecipeContents = new System.Windows.Forms.DataGridView();
             this.lbIngredientList = new System.Windows.Forms.ListBox();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbRecipeName = new System.Windows.Forms.TextBox();
@@ -42,6 +40,8 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvRecipeContents)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -53,10 +53,10 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.btnOK, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnCancel, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.gvRecipeContents, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.lbIngredientList, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnOk, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btnCancel, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.Ingredients, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 2);
@@ -76,10 +76,13 @@ namespace FoodStuffsController.gui.MessageBoxes
             // 
             this.gvRecipeContents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvRecipeContents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvRecipeContents.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gvRecipeContents.Location = new System.Drawing.Point(271, 52);
+            this.gvRecipeContents.MultiSelect = false;
             this.gvRecipeContents.Name = "gvRecipeContents";
-            this.gvRecipeContents.RowHeadersWidth = 51;
+            this.gvRecipeContents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.gvRecipeContents.RowTemplate.Height = 24;
+            this.gvRecipeContents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvRecipeContents.Size = new System.Drawing.Size(262, 206);
             this.gvRecipeContents.TabIndex = 0;
             // 
@@ -92,26 +95,6 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.lbIngredientList.Name = "lbIngredientList";
             this.lbIngredientList.Size = new System.Drawing.Size(262, 206);
             this.lbIngredientList.TabIndex = 1;
-            // 
-            // btnOk
-            // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(190, 339);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 2;
-            this.btnOk.Text = "OK";
-            this.btnOk.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(458, 339);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
@@ -187,6 +170,31 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
+            // btnOK
+            // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(172, 338);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(93, 23);
+            this.btnOK.TabIndex = 8;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(440, 338);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(93, 23);
+            this.btnCancel.TabIndex = 9;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
             // NewRecipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -210,8 +218,6 @@ namespace FoodStuffsController.gui.MessageBoxes
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridView gvRecipeContents;
         private System.Windows.Forms.ListBox lbIngredientList;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbRecipeName;
@@ -220,5 +226,7 @@ namespace FoodStuffsController.gui.MessageBoxes
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

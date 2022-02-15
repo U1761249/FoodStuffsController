@@ -29,14 +29,15 @@ namespace FoodStuffsController
         public SupervisorGUI()
         {
             InitializeComponent();
-            
+
             // Give a name to the current thread for debuggind.
             Thread.CurrentThread.Name = "SupervisorThread";
-            
+
             // Get the instance for the FeedBinController.
             controller = FeedBinController.getInstance();
 
             controller.BinListChangedEvent += updateValues;
+            controller.RecipeListChangedEvent += updateValues;
 
             // Define the controller for the interface.
             sgc = SupervisorGuiController.getInstance();
@@ -68,8 +69,9 @@ namespace FoodStuffsController
         /// <summary>
         /// Update the display data to the current data.
         /// </summary>
-        private void updateDisplay() 
+        private void updateDisplay()
         {
+            gvRecipe.DataSource = new DataTable();
             gvRecipe.DataSource = sgc.getRecipeDataTable();
 
             for (int i = 0; i < gvRecipe.Columns.Count; i++)
@@ -78,7 +80,7 @@ namespace FoodStuffsController
                 gvRecipe.Columns[i].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             }
             // Set the last column to size Fill
-            gvRecipe.Columns[gvRecipe.Columns.Count -1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            gvRecipe.Columns[gvRecipe.Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             // Resize rows
             gvRecipe.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -93,7 +95,7 @@ namespace FoodStuffsController
             {
                 binChart.ChartAreas.Clear();
                 binChart.Series.Clear();
-                binChart.ChartAreas.Add(new ChartArea()) ;                
+                binChart.ChartAreas.Add(new ChartArea());
                 binChart.ChartAreas[0].AxisY.Maximum = 100;
                 binChart.ChartAreas[0].AxisX.Maximum = controller.getBins().Count() + 1;
 
@@ -105,12 +107,12 @@ namespace FoodStuffsController
                 binChart.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
 
 
-                foreach (FeedBin bin in controller.getBins()) 
+                foreach (FeedBin bin in controller.getBins())
                 {
                     int binNo = bin.getBinNumber();
 
                     Series s = new Series($"Bin{binNo}");
-                                        
+
                     s.ChartType = SeriesChartType.Column;
                     s.Enabled = true;
                     s.YValueMembers = "Capacity";
@@ -121,15 +123,15 @@ namespace FoodStuffsController
                     else if (volume == 100) { s.Label = "FULL"; }
                     else { s.Label = $"{volume}%"; }
 
-                    
+
 
 
                     s.Points.Add(new DataPoint(binNo, bin.getVolumePercentage()));
-                        
+
                     binChart.Series.Add(s);
                 }
 
-                
+
             }
             catch (Exception e) { }
         }
@@ -138,7 +140,7 @@ namespace FoodStuffsController
         //___________________________________________________
         // Action Listeners for the GUI functions..
 
-        
+
 
         private void SupervisorGUI_Shown(object sender, EventArgs e)
         {
@@ -154,7 +156,7 @@ namespace FoodStuffsController
         {
             sgc.batch();
         }
-        
+
         private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();

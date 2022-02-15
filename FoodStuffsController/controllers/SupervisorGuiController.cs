@@ -37,7 +37,7 @@ namespace FoodStuffsController.controllers
             Recipe r = new Recipe();
             if (PopupBoxes.NewRecipe(ref r) == DialogResult.OK)
             {
-
+                controller.AddNewRecipe(r);
             }
         }
 

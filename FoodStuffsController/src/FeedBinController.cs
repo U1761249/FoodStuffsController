@@ -95,6 +95,7 @@ namespace FoodStuffsController.src
             Monitor.Enter(_LOCKED);
             try
             {
+                this.recipes = new List<Recipe>();
                 DataTable recipeTable = dbconn.queryDatabase(
                     "SELECT productName, prodName, volume from recipe " +
                     "left join recipeIngredients on recipe.recipeID = recipeIngredients.recipeID " +
@@ -157,6 +158,35 @@ namespace FoodStuffsController.src
                 recipe.VariableChangedEvent += RecipeVariableChanged;
             }
             finally { Monitor.Exit(_LOCKED); }
+        }
+
+        public void AddNewRecipe(Recipe recipe)
+        {
+            string addRecipeQuery = $"INSERT INTO recipe (productName) VALUES ('{recipe.getRecipeName()}');";
+            string addRIQuery = "";
+
+            if (!dbconn.updateDatabase(addRecipeQuery)) { return; }
+
+            DataTable result = dbconn.queryDatabase($"SELECT recipeID FROM recipe WHERE productName = '{recipe.getRecipeName()}'");
+            string recipeID = result.Rows[0][0].ToString();
+
+            foreach (RecipeIngredient ri in recipe.getIngredients())
+            {
+                string ingredientName = ri.getIngredientName();
+                // Create a new ingredient if one does not exist (Newly added)
+                if (!dbconn.databaseContains($"SELECT * FROM products WHERE prodName = '{ingredientName}';"))
+                {
+                    string newIngredientQuery = $"INSERT INTO products (prodName) VALUES ('{ingredientName}')";
+                    dbconn.updateDatabase(newIngredientQuery);
+                }
+                addRIQuery += $"INSERT INTO recipeIngredients (prodNo, recipeID, volume) VALUES (" +
+                    $"(SELECT prodNo FROM products WHERE prodName = '{ingredientName}'), '{recipeID}', '{ri.getIngredientPercentage()}');";
+            }
+
+            dbconn.updateDatabase(addRIQuery);
+
+            PopulateRecipes();
+            RecipeListChangedEvent(this, null);
         }
 
         /// <summary>
