@@ -73,7 +73,7 @@ namespace FoodStuffsController.src
                     "left join products on bins.prodNo = products.prodNo"
                     );
 
-                for (int r = 0; r < binTable.Rows.Count; r++) 
+                for (int r = 0; r < binTable.Rows.Count; r++)
                 {
                     int binNo = Convert.ToInt32(binTable.Rows[r][0].ToString());
                     string productName = binTable.Rows[r][1].ToString();
@@ -110,16 +110,16 @@ namespace FoodStuffsController.src
                     string ingredientName = recipeTable.Rows[r][1].ToString();
                     double volume = Convert.ToDouble(recipeTable.Rows[r][2].ToString());
 
-                    if (currentRecipe == null) { currentRecipe = new Recipe(productName);  }
-                    
-                    else if (currentRecipe.RecipeName != productName) 
+                    if (currentRecipe == null) { currentRecipe = new Recipe(productName); }
+
+                    else if (currentRecipe.getRecipeName() != productName)
                     {
                         AddRecipe(currentRecipe);
-                        currentRecipe = new Recipe(productName); 
+                        currentRecipe = new Recipe(productName);
                     }
-                                        
+
                     currentRecipe.addIngredient(new RecipeIngredient(ingredientName, volume));
-                    
+
                 }
                 AddRecipe(currentRecipe);
 
@@ -166,7 +166,7 @@ namespace FoodStuffsController.src
         /// <param name="e"></param>
         private void BinVariableChanged(object sender = null, EventArgs e = null)
         {
-            UpdateDatabase((FeedBin) sender);
+            UpdateDatabase((FeedBin)sender);
 
             BinListChangedEvent(this, null);
         }
@@ -180,7 +180,7 @@ namespace FoodStuffsController.src
         //___________________________________________________
         // Define class functionalty.
 
-        private void UpdateDatabase(FeedBin bin) 
+        private void UpdateDatabase(FeedBin bin)
         {
             string hasProductQuery = $"SELECT * FROM products WHERE prodName = '{bin.getProductName()}'";
             string hasBinQuery = $"SELECT * FROM bins WHERE binNo = {bin.getBinNumber()}";
@@ -188,18 +188,18 @@ namespace FoodStuffsController.src
             string insertQuery = $"" +
                 $"INSERT INTO bins (prodNo, currentVolume, maxVolume) values " +
                 $"((SELECT prodNo FROM products WHERE prodName = '{bin.getProductName()}'), {bin.getCurrentVolume()}, {bin.getMaxVolume()});";
-            
-                string updateQuery = $"" +
-                $"Update bins SET prodNo = " +
-                $"(SELECT prodNo FROM products WHERE prodName = '{bin.getProductName()}'), " +
-                $"currentVolume = {bin.getCurrentVolume()} WHERE binNo = {bin.getBinNumber()};";
+
+            string updateQuery = $"" +
+            $"Update bins SET prodNo = " +
+            $"(SELECT prodNo FROM products WHERE prodName = '{bin.getProductName()}'), " +
+            $"currentVolume = {bin.getCurrentVolume()} WHERE binNo = {bin.getBinNumber()};";
 
             bool hasProduct = dbconn.databaseContains(hasProductQuery);
 
-            if (!hasProduct) 
+            if (!hasProduct)
             {
                 // Add the new product to the database.
-                hasProduct = dbconn.updateDatabase(insertProductQuery);                
+                hasProduct = dbconn.updateDatabase(insertProductQuery);
             }
             // Check again in case the database could not be updated.
             if (!hasProduct)
@@ -207,21 +207,21 @@ namespace FoodStuffsController.src
                 // Notify the user if a product was not added to the bin.
                 PopupBoxes.ShowError("Database Update Error", $"An unexpected error prevented {bin.getProductName()} from being added to the database.");
             }
-            else 
+            else
             {
                 bool success;
                 // Insert a new bin if one does not exist with the current bin number.
-                if (!dbconn.databaseContains(hasBinQuery)) 
+                if (!dbconn.databaseContains(hasBinQuery))
                 {
                     success = dbconn.updateDatabase(insertQuery);
                 }
                 // Update the bin with the new values.
-                else 
-                { 
-                success = dbconn.updateDatabase(updateQuery);
-                }                
+                else
+                {
+                    success = dbconn.updateDatabase(updateQuery);
+                }
 
-                if (!success) 
+                if (!success)
                 {
                     PopupBoxes.ShowError("Database Update Error", $"An unexpected error prevented changes to bin {bin.getBinNumber()} from being made to the database.");
                 }
@@ -274,9 +274,31 @@ namespace FoodStuffsController.src
                 List<string> recipeStrings = new List<string>();
                 foreach (Recipe r in recipes)
                 {
-                    recipeStrings.Add(r.RecipeName);
+                    recipeStrings.Add(r.getRecipeName());
                 }
                 return recipeStrings;
+            }
+            finally { Monitor.Exit(_LOCKED); }
+        }
+
+        /// <summary>
+        /// Get a list of all ingredients within the database.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> getIngredientList()
+        {
+            List<string> ingredientList = new List<string>();
+            Monitor.Enter(_LOCKED);
+            try
+            {
+                DataTable results = dbconn.queryDatabase("SELECT prodName FROM products");
+
+                for (int r = 0; r < results.Rows.Count; r++)
+                {
+                    ingredientList.Add(results.Rows[r][0].ToString());
+                }
+
+                return ingredientList;
             }
             finally { Monitor.Exit(_LOCKED); }
         }
@@ -344,7 +366,7 @@ namespace FoodStuffsController.src
 
                     DataRow row = dt.NewRow();
                     // Get the recipe name.
-                    row["Product"] = recipe.RecipeName;
+                    row["Product"] = recipe.getRecipeName();
                     // Get a list of ingredients and ratios.
                     row["Ingredients"] = recipe.getIngredientString();
                     // Get the maximum size of a batch - rounded to 2dp
@@ -365,28 +387,28 @@ namespace FoodStuffsController.src
             {
                 double maxBatch = double.PositiveInfinity;
 
-                foreach (RecipeIngredient ri in recipe.ingredients)
+                foreach (RecipeIngredient ri in recipe.getIngredients())
                 {
-                    FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                    FeedBin ingredientBin = FindByProduct(ri.getIngredientName());
                     // Return 0 if there is an ingredient with no current bin.
                     if (ingredientBin == null)
                     {
-                        message = $"No bin contains product {ri.ingredientName}";
+                        message = $"No bin contains product {ri.getIngredientName()}";
                         return 0;
                     }
 
-                    double maxIngredient = (ingredientBin.getCurrentVolume() / ri.ingredientPercentage) * 100;
+                    double maxIngredient = (ingredientBin.getCurrentVolume() / ri.getIngredientPercentage()) * 100;
                     if (maxIngredient < maxBatch)
                     {
                         maxBatch = maxIngredient;
 
                         if (maxBatch == 0)
                         {
-                            message = $"The batch cannot be made, {ri.ingredientName} is missing.";
+                            message = $"The batch cannot be made, {ri.getIngredientName()} is missing.";
                         }
                         else
                         {
-                            message = $"The batch size is limited to {maxBatch} by the availability of {ri.ingredientName}";
+                            message = $"The batch size is limited to {maxBatch} by the availability of {ri.getIngredientName()}";
                         }
                     }
                 }
@@ -407,7 +429,7 @@ namespace FoodStuffsController.src
             Monitor.Enter(_LOCKED);
             try
             {
-                Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+                Recipe found = recipes.Find(r => r.getRecipeName() == recipeName);
                 if (found == null)
                 {
                     message = "The recipe could not be found.";
@@ -432,17 +454,17 @@ namespace FoodStuffsController.src
             {
 
                 // Find the recipe from the recipes list.
-                Recipe found = recipes.Find(r => r.RecipeName == recipeName);
+                Recipe found = recipes.Find(r => r.getRecipeName() == recipeName);
                 if (found == null)
                 {
                     return false;
                 }
 
                 // Loop over each ingredient in the recipe.
-                foreach (RecipeIngredient ri in found.ingredients)
+                foreach (RecipeIngredient ri in found.getIngredients())
                 {
                     // Find the bin that contains the recipe.
-                    FeedBin ingredientBin = FindByProduct(ri.ingredientName);
+                    FeedBin ingredientBin = FindByProduct(ri.getIngredientName());
                     // Stop if there is an ingredient with no current bin.
                     if (ingredientBin == null)
                     {
@@ -450,7 +472,7 @@ namespace FoodStuffsController.src
                     }
 
                     // Calculate and remove the correct portion of ingredient from the bin.
-                    double toRemove = (size / 100) * ri.ingredientPercentage;
+                    double toRemove = (size / 100) * ri.getIngredientPercentage();
                     if (ingredientBin.removeProduct(toRemove) != toRemove)
                     {
                         // One bin does not have enough ingredient. Stop making the batch.

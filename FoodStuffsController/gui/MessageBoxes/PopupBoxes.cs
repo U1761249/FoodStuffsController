@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using FoodStuffsController.src;
 
 namespace FoodStuffsController.gui.MessageBoxes
 {
@@ -35,11 +36,19 @@ namespace FoodStuffsController.gui.MessageBoxes
             return dialogResult;
         }
 
-        public static DialogResult MakeBatch(ref KeyValuePair<string, double> value, List<string> recipes) 
+        public static DialogResult MakeBatch(ref KeyValuePair<string, double> value, List<string> recipes)
         {
             BatchDialog bd = new BatchDialog(recipes);
             DialogResult dialogResult = bd.ShowDialog();
             value = bd.getValue();
+            return dialogResult;
+        }
+
+        public static DialogResult NewRecipe(ref Recipe r)
+        {
+            NewRecipe nr = new NewRecipe();
+            DialogResult dialogResult = nr.ShowDialog();
+            r = nr.getRecipe();
             return dialogResult;
         }
 

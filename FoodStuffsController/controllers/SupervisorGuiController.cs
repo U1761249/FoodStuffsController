@@ -34,7 +34,11 @@ namespace FoodStuffsController.controllers
 
         public void newRecipe()
         {
+            Recipe r = new Recipe();
+            if (PopupBoxes.NewRecipe(ref r) == DialogResult.OK)
+            {
 
+            }
         }
 
         public void batch()
