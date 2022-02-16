@@ -6,6 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>Adam Birch</Authors>
     <StartupObject>FoodStuffsController.Program</StartupObject>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

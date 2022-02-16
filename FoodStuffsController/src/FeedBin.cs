@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FoodStuffs_Control_System.src
 {
-    class FeedBin
+    public class FeedBin
     {
 
         //___________________________________________________
@@ -26,40 +26,48 @@ namespace FoodStuffs_Control_System.src
         public event EventHandler VariableChangedEvent;
 
         // Call the VariableChangedEvent whenever a variable changes.
-        private int binNumber { get { return _binNumber; } 
-            set 
-            { 
+        private int binNumber
+        {
+            get { return _binNumber; }
+            set
+            {
                 _binNumber = value;                     // Underscored variables store the data.
                 if (!ignoreUpdateEvent)                 // Check if the event should be triggered (Only false when the FeedBin is created)
                     VariableChangedEvent(this, null);   // Trigger the event to update interfaces.
-            } 
+            }
         }
-        private string productName { get { return _productName; } 
-            set 
-            { 
+        private string productName
+        {
+            get { return _productName; }
+            set
+            {
                 _productName = value;
                 if (!ignoreUpdateEvent)
-                    VariableChangedEvent(this, null); 
-            } 
+                    VariableChangedEvent(this, null);
+            }
         }
-        private double maxVolume { get { return _maxVolume; } 
-            set 
-            { 
+        private double maxVolume
+        {
+            get { return _maxVolume; }
+            set
+            {
                 _maxVolume = value;
                 if (!ignoreUpdateEvent)
-                    VariableChangedEvent(this, null); 
-            } 
+                    VariableChangedEvent(this, null);
+            }
         }
-        private double currentVolume { get { return _currentVolume; } 
-            set 
-            { 
+        private double currentVolume
+        {
+            get { return _currentVolume; }
+            set
+            {
                 _currentVolume = value;
                 if (!ignoreUpdateEvent)
-                    VariableChangedEvent(this, null); 
-            } 
+                    VariableChangedEvent(this, null);
+            }
         }
 
-        
+
 
         /// <summary>
         /// Constructor for a FeedBin
@@ -162,14 +170,14 @@ namespace FoodStuffs_Control_System.src
         public double getMaxVolume() { return maxVolume; }
         public double getCurrentVolume() { return currentVolume; }
 
-        public double getVolumePercentage() 
+        public double getVolumePercentage()
         {
             if (currentVolume == 0) return 0;
-            return (currentVolume / maxVolume) * 100; 
+            return (currentVolume / maxVolume) * 100;
         }
 
-        
 
-        
+
+
     }
 }
