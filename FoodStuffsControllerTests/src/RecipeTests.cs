@@ -18,7 +18,7 @@ namespace FoodStuffsController.src.Tests
         RecipeIngredient ri2;
 
         /// <summary>
-        /// Setup the bins ready for testing.
+        /// Setup the recipe ready for testing.
         /// </summary>
         [TestInitialize]
         public void BeforeEach()

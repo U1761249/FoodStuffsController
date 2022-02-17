@@ -14,7 +14,7 @@ namespace FoodStuffsController.src
     /// Shared Singleton resource that controls the system.
     /// Could be offloaded as a Web Service, or expernal software accessed via Java RMI or via Web Sockets.
     /// </summary>
-    class FeedBinController
+    public class FeedBinController
     {
 
         //___________________________________________________
@@ -33,14 +33,20 @@ namespace FoodStuffsController.src
 
         private readonly object _LOCKED = new object();
 
-        private FeedBinController()
+        private FeedBinController(bool databasePull = true)
         {
             dbconn = new DBManager();
 
             bins = new List<FeedBin>();
             recipes = new List<Recipe>();
-            PopulateBins();
-            PopulateRecipes();
+            
+            // Pull from the database if it is required.
+            // ONLY FALSE DURING TESTING.
+            if (databasePull)
+            {
+                PopulateBins();
+                PopulateRecipes();
+            }
         }
 
 
@@ -53,9 +59,9 @@ namespace FoodStuffsController.src
         /// Create the singleton instance if it does not exist.
         /// </summary>
         /// <returns></returns>
-        public static FeedBinController getInstance()
+        public static FeedBinController getInstance(bool databasePull = true)
         {
-            if (instance == null) instance = new FeedBinController();
+            if (instance == null) instance = new FeedBinController(databasePull);
             return instance;
         }
 
@@ -347,34 +353,6 @@ namespace FoodStuffsController.src
                 foreach (FeedBin bin in bins) { strings.Add(bin.ToString()); }
 
                 return strings;
-            }
-            finally { Monitor.Exit(_LOCKED); }
-        }
-
-        public DataTable getBinsDataTable()
-        {
-            Monitor.Enter(_LOCKED);
-            try
-            {
-                DataTable dt = new DataTable();
-                dt.Clear();
-                dt.Columns.Add("BinNo");
-                dt.Columns.Add("Product");
-                dt.Columns.Add("CurrentVolume");
-                dt.Columns.Add("MaxVolume");
-
-                foreach (FeedBin bin in bins)
-                {
-                    DataRow row = dt.NewRow();
-                    row["BinNo"] = bin.getBinNumber();
-                    row["Product"] = bin.getProductName();
-                    row["CurrentVolume"] = bin.getCurrentVolume();
-                    row["MaxVolume"] = bin.getMaxVolume();
-
-                    dt.Rows.Add(row);
-                }
-
-                return dt;
             }
             finally { Monitor.Exit(_LOCKED); }
         }
