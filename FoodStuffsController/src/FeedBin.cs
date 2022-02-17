@@ -107,7 +107,7 @@ namespace FoodStuffs_Control_System.src
         /// <returns>True if the name was changed.</returns>
         public bool setProductName(string newName)
         {
-            if (currentVolume == 0.0)
+            if (currentVolume == 0.0 && !String.IsNullOrWhiteSpace(newName))
             {
                 productName = newName;
                 return true;
