@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace FoodStuffsController.sql
 {
-    class DBManager
+    public class DBManager
     {
         private MySqlConnection conn;
         private MySqlCommand cmd;
