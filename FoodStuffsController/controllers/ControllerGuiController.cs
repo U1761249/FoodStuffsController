@@ -65,10 +65,10 @@ namespace FoodStuffsController.controllers
         /// <summary>
         /// Change the content of a bin.
         /// </summary>
-        public void change() 
+        public void change()
         {
             string value = "";
-            if (PopupBoxes.InputBox("New Product", "What is the new product:", ref value) == DialogResult.OK)
+            if (PopupBoxes.ChangeProduct(ref value) == DialogResult.OK)
             {
                 if (!String.IsNullOrWhiteSpace(value))
                 {
@@ -82,7 +82,7 @@ namespace FoodStuffsController.controllers
 
                     currentBin.setProductName(value);
                 }
-                else 
+                else
                 {
                     PopupBoxes.ShowError("Illegal argument", "Product name cannot be empty.");
                 }

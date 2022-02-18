@@ -52,5 +52,13 @@ namespace FoodStuffsController.gui.MessageBoxes
             return dialogResult;
         }
 
+        public static DialogResult ChangeProduct(ref string value)
+        {
+            ChangeProduct cp = new ChangeProduct();
+            DialogResult dialogResult = cp.ShowDialog();
+            value = cp.getValue();
+            return dialogResult;
+        }
+
     }
 }
