@@ -39,7 +39,8 @@ namespace FoodStuffsController.gui.MessageBoxes
             catch (FormatException err) 
             {
                 // remove the last chatacter from the text box.
-                tbQuantity.Text = tbQuantity.Text.Substring(0, tbQuantity.Text.Length - 1);
+                //tbQuantity.Text = tbQuantity.Text.Substring(0, tbQuantity.Text.Length - 1);
+                tbQuantity.Text = new string(tbQuantity.Text.Where(c => char.IsDigit(c)).ToArray());
             }
         }
 
