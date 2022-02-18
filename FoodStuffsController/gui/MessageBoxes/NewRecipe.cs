@@ -104,11 +104,17 @@ namespace FoodStuffsController.gui.MessageBoxes
                     r["Ingredient"] = ingredientName;
                     r["Percentage"] = dQuantity;
 
+                    if (dQuantity > 100 || dQuantity < 0) 
+                    { 
+                        PopupBoxes.ShowError("Invalid Quantity", "The quantity must be between 0 and 100"); 
+                        return; 
+                    }
+
                     contents.Rows.Add(r);
                 }
                 catch (Exception err)
                 {
-                    PopupBoxes.ShowError();
+                    PopupBoxes.ShowError("Invalid Argument", "There was a problem with the quantity provided.");
                 }
             }
         }
