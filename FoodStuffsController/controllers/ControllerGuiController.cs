@@ -110,7 +110,7 @@ namespace FoodStuffsController.controllers
 
                     bool added = currentBin.addProduct(toAdd);
 
-                    if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {added}mᶟ.");
+                    if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {value}mᶟ.");
                 }
                 catch (Exception err)
                 {
