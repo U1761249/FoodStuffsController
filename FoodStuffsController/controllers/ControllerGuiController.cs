@@ -101,6 +101,13 @@ namespace FoodStuffsController.controllers
                 try
                 {
                     double toAdd = Convert.ToDouble(value);
+
+                    if (toAdd < 0)
+                    {
+                        PopupBoxes.ShowError("Error", "Cannot add a value less than 0.");
+                        return;
+                    }
+
                     bool added = currentBin.addProduct(toAdd);
 
                     if (!added) PopupBoxes.ShowError("Error", $"Not enough space in the bin to add {added}mᶟ.");
