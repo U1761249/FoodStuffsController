@@ -130,6 +130,13 @@ namespace FoodStuffsController.controllers
                 try
                 {
                     double toRemove = Convert.ToDouble(value);
+
+                    if (toRemove < 0)
+                    {
+                        PopupBoxes.ShowError("Error", "Cannot remove a value less than 0.");
+                        return;
+                    }
+
                     double removed = currentBin.removeProduct(toRemove);
 
                     // Notify the user if the quantity of product could not be removed.
