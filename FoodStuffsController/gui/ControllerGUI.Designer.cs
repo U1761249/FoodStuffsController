@@ -100,7 +100,7 @@ namespace FoodStuffsController
             this.btnChange.TabIndex = 0;
             this.btnChange.Text = "Change Product";
             this.btnChange.UseVisualStyleBackColor = true;
-            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
+            this.btnChange.Click += new System.EventHandler(this.BtnChange_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -125,7 +125,7 @@ namespace FoodStuffsController
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // flowLayoutPanel4
             // 
@@ -150,7 +150,7 @@ namespace FoodStuffsController
             this.btnRemove.TabIndex = 0;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -248,7 +248,7 @@ namespace FoodStuffsController
             this.cbBin.Name = "cbBin";
             this.cbBin.Size = new System.Drawing.Size(171, 24);
             this.cbBin.TabIndex = 4;
-            this.cbBin.SelectedIndexChanged += new System.EventHandler(this.cbBin_SelectedIndexChanged);
+            this.cbBin.SelectedIndexChanged += new System.EventHandler(this.CbBin_SelectedIndexChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -268,7 +268,7 @@ namespace FoodStuffsController
             this.btnEmpty.TabIndex = 0;
             this.btnEmpty.Text = "Flush Bin";
             this.btnEmpty.UseVisualStyleBackColor = true;
-            this.btnEmpty.Click += new System.EventHandler(this.btnEmpty_Click);
+            this.btnEmpty.Click += new System.EventHandler(this.BtnEmpty_Click);
             // 
             // ControllerGUI
             // 

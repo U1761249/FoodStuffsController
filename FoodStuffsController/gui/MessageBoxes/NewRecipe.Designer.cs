@@ -147,7 +147,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnNew
             // 
@@ -157,7 +157,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnNew.TabIndex = 2;
             this.btnNew.Text = "New Ingredient";
             this.btnNew.UseVisualStyleBackColor = true;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // btnRemove
             // 
@@ -168,7 +168,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnRemove.TabIndex = 7;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
             // 
             // btnOK
             // 
@@ -181,7 +181,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.btnOK.TabIndex = 8;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 

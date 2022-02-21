@@ -32,7 +32,7 @@ namespace FoodStuffsController.gui.MessageBoxes
         {
             InputDialog id = new InputDialog(title, promptText);
             DialogResult dialogResult = id.ShowDialog();
-            value = id.getValue();
+            value = id.GetValue();
             return dialogResult;
         }
 
@@ -48,7 +48,7 @@ namespace FoodStuffsController.gui.MessageBoxes
         {
             NewRecipe nr = new NewRecipe();
             DialogResult dialogResult = nr.ShowDialog();
-            r = nr.getRecipe();
+            r = nr.GetRecipe();
             return dialogResult;
         }
 
@@ -56,7 +56,7 @@ namespace FoodStuffsController.gui.MessageBoxes
         {
             ChangeProduct cp = new ChangeProduct();
             DialogResult dialogResult = cp.ShowDialog();
-            value = cp.getValue();
+            value = cp.GetValue();
             return dialogResult;
         }
 

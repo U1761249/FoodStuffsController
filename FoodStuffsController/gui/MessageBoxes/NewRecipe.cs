@@ -21,9 +21,9 @@ namespace FoodStuffsController.gui.MessageBoxes
         public NewRecipe()
         {
             InitializeComponent();
-            controller = FeedBinController.getInstance();
+            controller = FeedBinController.GetInstance();
             contents = new DataTable();
-            ingredients = controller.getIngredientList();
+            ingredients = controller.GetIngredientList();
 
             UpdateListView();
 
@@ -44,7 +44,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             foreach (string i in ingredients) { lbIngredientList.Items.Add(i); }
         }
 
-        public Recipe getRecipe()
+        public Recipe GetRecipe()
         {
             Recipe r = new Recipe();
             r.setRecipeName(tbRecipeName.Text);
@@ -62,7 +62,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             return r;
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void BtnNew_Click(object sender, EventArgs e)
         {
             string ingredient = "";
             if (PopupBoxes.InputBox("New Product", "What is the new product:", ref ingredient) == DialogResult.OK)
@@ -75,7 +75,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (lbIngredientList.SelectedItem == null)
             {
@@ -119,7 +119,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
             if (gvRecipeContents.SelectedRows.Count == 0)
             {
@@ -165,9 +165,9 @@ namespace FoodStuffsController.gui.MessageBoxes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(tbRecipeName.Text) || controller.getRecipeList().Contains(tbRecipeName.Text))
+            if (String.IsNullOrWhiteSpace(tbRecipeName.Text) || controller.GetRecipeList().Contains(tbRecipeName.Text))
             {
                 PopupBoxes.ShowError("Invalid Name", "The recipe was not given a name, or a recipe exists with the chosen name.");
                 this.DialogResult = DialogResult.None;
@@ -177,7 +177,7 @@ namespace FoodStuffsController.gui.MessageBoxes
                 PopupBoxes.ShowError("Incorrect Percentage", "The recipe percentages do not sum to 100%.");
                 this.DialogResult = DialogResult.None;
             }
-            else if (contents.Rows.Count > controller.getBins().Count)
+            else if (contents.Rows.Count > controller.GetBins().Count)
             {
                 PopupBoxes.ShowError("Too many ingredients", "The recipe has more ingredients than there are bins available.");
                 this.DialogResult = DialogResult.None;

@@ -70,7 +70,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.tbValue.Name = "tbValue";
             this.tbValue.Size = new System.Drawing.Size(287, 22);
             this.tbValue.TabIndex = 1;
-            this.tbValue.TextChanged += new System.EventHandler(this.tbValue_TextChanged);
+            this.tbValue.TextChanged += new System.EventHandler(this.TbValue_TextChanged);
             // 
             // flowLayoutPanel2
             // 

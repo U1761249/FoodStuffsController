@@ -100,7 +100,7 @@ namespace FoodStuffsController
             this.btnNewRecipe.TabIndex = 0;
             this.btnNewRecipe.Text = "New Recipe";
             this.btnNewRecipe.UseVisualStyleBackColor = true;
-            this.btnNewRecipe.Click += new System.EventHandler(this.btnNewRecipe_Click);
+            this.btnNewRecipe.Click += new System.EventHandler(this.BtnNewRecipe_Click);
             // 
             // btnBatch
             // 
@@ -111,7 +111,7 @@ namespace FoodStuffsController
             this.btnBatch.TabIndex = 1;
             this.btnBatch.Text = "Make Batch";
             this.btnBatch.UseVisualStyleBackColor = true;
-            this.btnBatch.Click += new System.EventHandler(this.btnBatch_Click);
+            this.btnBatch.Click += new System.EventHandler(this.BtnBatch_Click);
             // 
             // gvRecipe
             // 

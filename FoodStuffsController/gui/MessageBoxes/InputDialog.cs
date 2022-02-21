@@ -12,7 +12,7 @@ namespace FoodStuffsController.gui.MessageBoxes
     {
         string value;
 
-        public string getValue() { return value; }
+        public string GetValue() { return value; }
 
         public InputDialog(string title, string promptText)
         {
@@ -22,7 +22,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.lblPrompt.Text = promptText;
         }
 
-        private void tbValue_TextChanged(object sender, EventArgs e)
+        private void TbValue_TextChanged(object sender, EventArgs e)
         {
             value = this.tbValue.Text;
         }

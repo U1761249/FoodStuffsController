@@ -14,17 +14,17 @@ namespace FoodStuffsController.gui.MessageBoxes
 
     public partial class ChangeProduct : Form
     {
-        FeedBinController controller = FeedBinController.getInstance();
+        FeedBinController controller = FeedBinController.GetInstance();
         string value;
-        public string getValue() { return value; }
+        public string GetValue() { return value; }
 
         public ChangeProduct()
         {
             InitializeComponent();
-            lbProducts.DataSource = controller.getIngredientList();
+            lbProducts.DataSource = controller.GetIngredientList();
         }
 
-        private void lbProducts_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             value = lbProducts.SelectedItem.ToString();
         }

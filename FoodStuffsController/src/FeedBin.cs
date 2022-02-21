@@ -105,7 +105,7 @@ namespace FoodStuffs_Control_System.src
         /// </summary>
         /// <param name="newName">New name of the product.</param>
         /// <returns>True if the name was changed.</returns>
-        public bool setProductName(string newName)
+        public bool SetProductName(string newName)
         {
             if (currentVolume == 0.0 && !String.IsNullOrWhiteSpace(newName))
             {
@@ -119,7 +119,7 @@ namespace FoodStuffs_Control_System.src
         /// <summary>
         /// Empty the bin.
         /// </summary>
-        public void flush()
+        public void Flush()
         {
 
             currentVolume = 0.0;
@@ -130,7 +130,7 @@ namespace FoodStuffs_Control_System.src
         /// </summary>
         /// <param name="volume"></param>
         /// <returns></returns>
-        public bool addProduct(double volume)
+        public bool AddProduct(double volume)
         {
             if (maxVolume >= currentVolume + volume)
             {
@@ -147,7 +147,7 @@ namespace FoodStuffs_Control_System.src
         /// </summary>
         /// <param name="volume"></param>
         /// <returns>The actual quantity of product removed.</returns>
-        public double removeProduct(double volume)
+        public double RemoveProduct(double volume)
         {
             if (currentVolume >= volume)
             {
@@ -165,12 +165,12 @@ namespace FoodStuffs_Control_System.src
 
         //___________________________________________________
         // Getters for each of the values.
-        public int getBinNumber() { return binNumber; }
-        public string getProductName() { return productName; }
-        public double getMaxVolume() { return maxVolume; }
-        public double getCurrentVolume() { return currentVolume; }
+        public int GetBinNumber() { return binNumber; }
+        public string GetProductName() { return productName; }
+        public double GetMaxVolume() { return maxVolume; }
+        public double GetCurrentVolume() { return currentVolume; }
 
-        public double getVolumePercentage()
+        public double GetVolumePercentage()
         {
             if (currentVolume == 0) return 0;
             return (currentVolume / maxVolume) * 100;

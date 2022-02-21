@@ -24,7 +24,7 @@ namespace FoodStuffsController.src.Tests
         [TestInitialize]
         public void BeforeEach()
         {
-            controller = FeedBinController.getInstance(false);
+            controller = FeedBinController.GetInstance(false);
 
             controller.BinListChangedEvent += this.IgnoreEvent;
             controller.RecipeListChangedEvent += this.IgnoreEvent;
@@ -38,18 +38,18 @@ namespace FoodStuffsController.src.Tests
             bins.Add(new FeedBin(3, "Bin 3"));
 
             Recipe R1 = new Recipe("Recipe 1");
-            R1.addIngredient(new RecipeIngredient("Ingredient 1", 50));
-            R1.addIngredient(new RecipeIngredient("Ingredient 2", 50));
+            R1.AddIngredient(new RecipeIngredient("Ingredient 1", 50));
+            R1.AddIngredient(new RecipeIngredient("Ingredient 2", 50));
 
             Recipe R2 = new Recipe("Recipe 2");
-            R2.addIngredient(new RecipeIngredient("Ingredient 3", 50));
-            R2.addIngredient(new RecipeIngredient("Ingredient 4", 50));
+            R2.AddIngredient(new RecipeIngredient("Ingredient 3", 50));
+            R2.AddIngredient(new RecipeIngredient("Ingredient 4", 50));
 
             recipes.Add(R1);
             recipes.Add(R2);
 
-            controller.setBins(bins);
-            controller.setRecipse(recipes);            
+            controller.SetBins(bins);
+            controller.SetRecipse(recipes);            
         }
 
 
@@ -74,15 +74,15 @@ namespace FoodStuffsController.src.Tests
             bins[2].VariableChangedEvent += IgnoreEvent;
 
             // Define the bin product names.
-            bins[0].setProductName("Ingredient 1");
-            bins[1].setProductName("Ingredient 2");
+            bins[0].SetProductName("Ingredient 1");
+            bins[1].SetProductName("Ingredient 2");
 
             // Add product to the bins.
-            bins[0].addProduct(30);
-            bins[1].addProduct(30);
+            bins[0].AddProduct(30);
+            bins[1].AddProduct(30);
 
             // Replace the bins list with the modified one.
-            controller.setBins(bins);
+            controller.SetBins(bins);
         }
 
 
@@ -96,7 +96,7 @@ namespace FoodStuffsController.src.Tests
         public void canMakeTestNoStock()
         {
             string message = "";
-            Assert.IsFalse(controller.canMake("Recipe 1", 20, ref message));
+            Assert.IsFalse(controller.CanMake("Recipe 1", 20, ref message));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace FoodStuffsController.src.Tests
         {
             AddStock();
             string message = "";
-            Assert.IsTrue(controller.canMake("Recipe 1", 20, ref message));
+            Assert.IsTrue(controller.CanMake("Recipe 1", 20, ref message));
 
         }
 
@@ -117,7 +117,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void makeBatchTestNoStock() 
         {
-            Assert.IsFalse(controller.makeBatch("Recipe 1", 50));
+            Assert.IsFalse(controller.MakeBatch("Recipe 1", 50));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace FoodStuffsController.src.Tests
         public void makeBatchTestHasStock()
         {
             AddStock();
-            Assert.IsTrue(controller.makeBatch("Recipe 1", 50));
+            Assert.IsTrue(controller.MakeBatch("Recipe 1", 50));
         }
 
         //----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void getBinsTest()
         {
-            CollectionAssert.AreEqual(bins, controller.getBins());
+            CollectionAssert.AreEqual(bins, controller.GetBins());
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace FoodStuffsController.src.Tests
         public void setBinsTest()
         {
             bins.Add(new FeedBin(4, "New Bin"));
-            controller.setBins(bins);
-            CollectionAssert.AreEqual(bins, controller.getBins());
+            controller.SetBins(bins);
+            CollectionAssert.AreEqual(bins, controller.GetBins());
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void getRecipesTest()
         {
-            CollectionAssert.AreEqual(recipes, controller.getRecipes());
+            CollectionAssert.AreEqual(recipes, controller.GetRecipes());
         }
 
         /// <summary>
@@ -218,13 +218,13 @@ namespace FoodStuffsController.src.Tests
             RecipeIngredient ri1 = new RecipeIngredient("New Ingredient 1", 60);
             RecipeIngredient ri2 = new RecipeIngredient("New Ingredient 2", 40);
             
-            R.addIngredient(ri1);
-            R.addIngredient(ri2);
+            R.AddIngredient(ri1);
+            R.AddIngredient(ri2);
 
             recipes.Add(R);
-            controller.setRecipse(recipes);
+            controller.SetRecipse(recipes);
 
-            CollectionAssert.AreEqual(recipes, controller.getRecipes());
+            CollectionAssert.AreEqual(recipes, controller.GetRecipes());
         }
                
         /// <summary>
@@ -248,7 +248,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void getRecipeDataTableTest()
         {
-            DataRow actualRow = controller.getRecipeDataTable().Rows[0];
+            DataRow actualRow = controller.GetRecipeDataTable().Rows[0];
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Ingredient 1 (50%)");

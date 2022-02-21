@@ -34,10 +34,10 @@ namespace FoodStuffsController
             Thread.CurrentThread.Name = "SupervisorThread";
 
             // Get the instance for the FeedBinController.
-            controller = FeedBinController.getInstance();
+            controller = FeedBinController.GetInstance();
 
-            controller.BinListChangedEvent += updateValues;
-            controller.RecipeListChangedEvent += updateValues;
+            controller.BinListChangedEvent += UpdateValues;
+            controller.RecipeListChangedEvent += UpdateValues;
 
             // Define the controller for the interface.
             sgc = SupervisorGuiController.getInstance();
@@ -50,12 +50,12 @@ namespace FoodStuffsController
         //___________________________________________________
         // Define subscriber functions to listen to events.
 
-        private void updateValues(object sender = null, EventArgs e = null)
+        private void UpdateValues(object sender = null, EventArgs e = null)
         {
             try
             {
-                binChart.BeginInvoke(new InvokeDelegate(updateDisplay));
-                binChart.BeginInvoke(new InvokeDelegate(updateGraph));
+                binChart.BeginInvoke(new InvokeDelegate(UpdateDisplay));
+                binChart.BeginInvoke(new InvokeDelegate(UpdateGraph));
             }
             catch (InvalidOperationException err) { }
         }
@@ -69,10 +69,10 @@ namespace FoodStuffsController
         /// <summary>
         /// Update the display data to the current data.
         /// </summary>
-        private void updateDisplay()
+        private void UpdateDisplay()
         {
             gvRecipe.DataSource = new DataTable();
-            gvRecipe.DataSource = sgc.getRecipeDataTable();
+            gvRecipe.DataSource = sgc.GetRecipeDataTable();
 
             for (int i = 0; i < gvRecipe.Columns.Count; i++)
             {
@@ -89,7 +89,7 @@ namespace FoodStuffsController
         /// <summary>
         /// Convert the data from the controller bin list into a graph.
         /// </summary>
-        private void updateGraph()
+        private void UpdateGraph()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace FoodStuffsController
                 binChart.Series.Clear();
                 binChart.ChartAreas.Add(new ChartArea());
                 binChart.ChartAreas[0].AxisY.Maximum = 100;
-                binChart.ChartAreas[0].AxisX.Maximum = controller.getBins().Count() + 1;
+                binChart.ChartAreas[0].AxisX.Maximum = controller.GetBins().Count() + 1;
 
                 binChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
                 binChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
@@ -107,9 +107,9 @@ namespace FoodStuffsController
                 binChart.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
 
 
-                foreach (FeedBin bin in controller.getBins())
+                foreach (FeedBin bin in controller.GetBins())
                 {
-                    int binNo = bin.getBinNumber();
+                    int binNo = bin.GetBinNumber();
 
                     Series s = new Series($"Bin{binNo}");
 
@@ -118,7 +118,7 @@ namespace FoodStuffsController
                     s.YValueMembers = "Capacity";
 
                     // Change the label based on capacity
-                    double volume = bin.getVolumePercentage();
+                    double volume = bin.GetVolumePercentage();
                     if (volume == 0) { s.Label = "EMPTY"; }
                     else if (volume == 100) { s.Label = "FULL"; }
                     else { s.Label = $"{volume}%"; }
@@ -126,7 +126,7 @@ namespace FoodStuffsController
 
 
 
-                    s.Points.Add(new DataPoint(binNo, bin.getVolumePercentage()));
+                    s.Points.Add(new DataPoint(binNo, bin.GetVolumePercentage()));
 
                     binChart.Series.Add(s);
                 }
@@ -144,17 +144,17 @@ namespace FoodStuffsController
 
         private void SupervisorGUI_Shown(object sender, EventArgs e)
         {
-            updateValues();
+            UpdateValues();
         }
 
-        private void btnNewRecipe_Click(object sender, EventArgs e)
+        private void BtnNewRecipe_Click(object sender, EventArgs e)
         {
-            sgc.newRecipe();
+            sgc.NewRecipe();
         }
 
-        private void btnBatch_Click(object sender, EventArgs e)
+        private void BtnBatch_Click(object sender, EventArgs e)
         {
-            sgc.batch();
+            sgc.Batch();
         }
 
         private void SupervisorGUI_FormClosed(object sender, FormClosedEventArgs e)

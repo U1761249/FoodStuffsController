@@ -28,8 +28,8 @@ namespace FoodStuffsController.src.Tests
             ri1 = new RecipeIngredient("Ingredient 1", 50);
             ri2 = new RecipeIngredient("Ingredient 2", 50);
 
-            r1.addIngredient(ri1);
-            r1.addIngredient(ri2);
+            r1.AddIngredient(ri1);
+            r1.AddIngredient(ri2);
 
         }
 
@@ -43,7 +43,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void removeIngredientTestObjectPresent()
         {
-            r1.removeIngredient(ri2);
+            r1.RemoveIngredient(ri2);
             Assert.AreEqual(ri1, r1.getIngredients()[0]);
         }
 
@@ -53,7 +53,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void removeIngredientTestNamePresent()
         {
-            r1.removeIngredient(ri2.getIngredientName());
+            r1.RemoveIngredient(ri2.GetIngredientName());
             Assert.AreEqual(ri1, r1.getIngredients()[0]);
         }
 
@@ -68,7 +68,7 @@ namespace FoodStuffsController.src.Tests
             expected.Add(ri1);
             expected.Add(ri2);
 
-            r1.removeIngredient(ri3);
+            r1.RemoveIngredient(ri3);
             CollectionAssert.AreEqual(expected, r1.getIngredients());
         }
 
@@ -79,7 +79,7 @@ namespace FoodStuffsController.src.Tests
         [TestMethod()]
         public void removeIngredientTestNameMissing()
         {
-            r1.removeIngredient("Ingredient 3");
+            r1.RemoveIngredient("Ingredient 3");
             List<RecipeIngredient> expected = new List<RecipeIngredient>();
             expected.Add(ri1);
             expected.Add(ri2);
@@ -152,7 +152,7 @@ namespace FoodStuffsController.src.Tests
 
             expectedOut = sb.ToString();
 
-            string actual = r1.getIngredientString();
+            string actual = r1.GetIngredientString();
             Assert.AreEqual(expectedOut, actual, actual);
         }
     }

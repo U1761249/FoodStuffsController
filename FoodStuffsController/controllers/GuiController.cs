@@ -8,7 +8,7 @@ namespace FoodStuffsController.controllers
     /// <summary>
     /// Used to control external GUI functions (E.G. CRUD operations)
     /// </summary>
-    class GuiController
+    static class GuiController
     {
 
 

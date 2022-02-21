@@ -21,7 +21,7 @@ namespace FoodStuffsController.sql
         private const string password = "AB07oct21ab";
 
 
-    public static List<string> getConnection() 
+    public static List<string> GetConnection() 
         {
 
             return new List<string>() { hostname, port, database, username, password };

@@ -26,13 +26,13 @@ namespace FoodStuffsController.controllers
         }
         private SupervisorGuiController()
         {
-            controller = FeedBinController.getInstance();
+            controller = FeedBinController.GetInstance();
         }
 
-        public DataTable getRecipeDataTable() { return controller.getRecipeDataTable(); }
+        public DataTable GetRecipeDataTable() { return controller.GetRecipeDataTable(); }
 
 
-        public void newRecipe()
+        public void NewRecipe()
         {
             Recipe r = new Recipe();
             if (PopupBoxes.NewRecipe(ref r) == DialogResult.OK)
@@ -41,10 +41,10 @@ namespace FoodStuffsController.controllers
             }
         }
 
-        public void batch()
+        public void Batch()
         {
             KeyValuePair<string, double> batchInfo = new KeyValuePair<string, double>("", 0);
-            if (PopupBoxes.MakeBatch(ref batchInfo, controller.getRecipeList()) == DialogResult.OK)
+            if (PopupBoxes.MakeBatch(ref batchInfo, controller.GetRecipeList()) == DialogResult.OK)
             {
                 if (batchInfo.Value <= 0)
                 {
@@ -53,9 +53,10 @@ namespace FoodStuffsController.controllers
                 }
 
                 string message = "";
-                if (controller.canMake(batchInfo.Key, batchInfo.Value, ref message))
+                if (controller.CanMake(batchInfo.Key, batchInfo.Value, ref message))
                 {
-                    bool success = controller.makeBatch(batchInfo.Key, batchInfo.Value);
+                    bool success = controller.MakeBatch(batchInfo.Key, batchInfo.Value);
+                    if (!success) PopupBoxes.ShowError();
                 }
                 else PopupBoxes.ShowError("Invalid Batch", message, MessageBoxIcon.Information);
             }

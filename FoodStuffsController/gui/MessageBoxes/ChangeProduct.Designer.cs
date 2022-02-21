@@ -104,7 +104,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.lbProducts.Name = "lbProducts";
             this.lbProducts.Size = new System.Drawing.Size(292, 36);
             this.lbProducts.TabIndex = 3;
-            this.lbProducts.SelectedIndexChanged += new System.EventHandler(this.lbProducts_SelectedIndexChanged);
+            this.lbProducts.SelectedIndexChanged += new System.EventHandler(this.LbProducts_SelectedIndexChanged);
             // 
             // ChangeProduct
             // 

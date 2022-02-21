@@ -100,7 +100,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.tbQuantity.Name = "tbQuantity";
             this.tbQuantity.Size = new System.Drawing.Size(132, 22);
             this.tbQuantity.TabIndex = 7;
-            this.tbQuantity.TextChanged += new System.EventHandler(this.tbQuantity_TextChanged);
+            this.tbQuantity.TextChanged += new System.EventHandler(this.TbQuantity_TextChanged);
             // 
             // lbRecipes
             // 
@@ -112,7 +112,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             this.lbRecipes.Name = "lbRecipes";
             this.lbRecipes.Size = new System.Drawing.Size(280, 82);
             this.lbRecipes.TabIndex = 8;
-            this.lbRecipes.SelectedIndexChanged += new System.EventHandler(this.lbRecipes_SelectedIndexChanged);
+            this.lbRecipes.SelectedIndexChanged += new System.EventHandler(this.LbRecipes_SelectedIndexChanged);
             // 
             // btnOK
             // 

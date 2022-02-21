@@ -26,29 +26,29 @@ namespace FoodStuffsController.src
             this.ingredients = new List<RecipeIngredient>();
         }
 
-        public void addIngredient(RecipeIngredient ingredient)
+        public void AddIngredient(RecipeIngredient ingredient)
         {
             this.ingredients.Add(ingredient);
         }
 
-        public void removeIngredient(RecipeIngredient ingredient)
+        public void RemoveIngredient(RecipeIngredient ingredient)
         {
             if (ingredients.Contains(ingredient)) ingredients.Remove(ingredient);
         }
 
-        public void removeIngredient(string ingredientName)
+        public void RemoveIngredient(string ingredientName)
         {
-            RecipeIngredient ingredient = ingredients.SingleOrDefault(x => x.getIngredientName() == ingredientName);
+            RecipeIngredient ingredient = ingredients.SingleOrDefault(x => x.GetIngredientName() == ingredientName);
 
         }
 
-        public string getIngredientString()
+        public string GetIngredientString()
         {
             StringBuilder sb = new StringBuilder();
 
             foreach (RecipeIngredient ri in ingredients)
             {
-                sb.AppendLine($"{ri.getIngredientName()} ({ri.getIngredientPercentage()}%)");
+                sb.AppendLine($"{ri.GetIngredientName()} ({ri.GetIngredientPercentage()}%)");
             }
 
             return sb.ToString();
@@ -64,10 +64,10 @@ namespace FoodStuffsController.src
         private string ingredientName;
         private double ingredientPercentage;
 
-        public string getIngredientName() { return this.ingredientName; }
-        public void setIngredientName(string newName) { this.ingredientName = newName; }
-        public double getIngredientPercentage() { return this.ingredientPercentage; }
-        public void setIngredientPercentage(double newPercentage) { this.ingredientPercentage = newPercentage; }
+        public string GetIngredientName() { return this.ingredientName; }
+        public void SetIngredientName(string newName) { this.ingredientName = newName; }
+        public double GetIngredientPercentage() { return this.ingredientPercentage; }
+        public void SetIngredientPercentage(double newPercentage) { this.ingredientPercentage = newPercentage; }
 
         public RecipeIngredient(string ingredient, double percentage)
         {

@@ -22,7 +22,7 @@ namespace FoodStuffsController.sql
 
         public DBManager()
         {
-            List<string> data = SQLConnectionSettings.getConnection();
+            List<string> data = SQLConnectionSettings.GetConnection();
 
             this.hostname = data[0];
             this.port = data[1];
@@ -42,7 +42,7 @@ namespace FoodStuffsController.sql
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public DataTable queryDatabase(string query)
+        public DataTable QueryDatabase(string query)
         {
             DataTable result = new DataTable();
             try
@@ -72,7 +72,7 @@ namespace FoodStuffsController.sql
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public bool updateDatabase(string query)
+        public bool UpdateDatabase(string query)
         {
             bool updateSuccess = false;
             try
@@ -98,7 +98,7 @@ namespace FoodStuffsController.sql
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public bool databaseContains(string query)
+        public bool DatabaseContains(string query)
         {
             bool updateSuccess = false;
             try

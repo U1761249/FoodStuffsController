@@ -41,8 +41,8 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void addProductTestHasSpace()
         {
-            bin1.addProduct(20);
-            Assert.AreEqual(bin2.getCurrentVolume(), bin1.getCurrentVolume());
+            bin1.AddProduct(20);
+            Assert.AreEqual(bin2.GetCurrentVolume(), bin1.GetCurrentVolume());
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace FoodStuffs_Control_System.src.Tests
         public void addProductTestBinOverflow()
         {
             
-            Assert.IsFalse(bin1.addProduct(50));
+            Assert.IsFalse(bin1.AddProduct(50));
         }
 
 
@@ -66,8 +66,8 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void removeProductTestHasEnough()
         {
-            bin2.removeProduct(20);
-            Assert.AreEqual(bin2.getCurrentVolume(), bin1.getCurrentVolume());
+            bin2.RemoveProduct(20);
+            Assert.AreEqual(bin2.GetCurrentVolume(), bin1.GetCurrentVolume());
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void removeProductTestNotEnough()
         {
-            bin2.removeProduct(50);
-            Assert.AreEqual(bin2.getCurrentVolume(), bin1.getCurrentVolume());
+            bin2.RemoveProduct(50);
+            Assert.AreEqual(bin2.GetCurrentVolume(), bin1.GetCurrentVolume());
         }
 
 
@@ -93,8 +93,8 @@ namespace FoodStuffs_Control_System.src.Tests
         {
             // Accessing a bin after a name change should work the same as accessing a bin with an initialized name.            
 
-            bin1.setProductName("Changed Product");
-            Assert.AreEqual(bin2.getProductName(), bin1.getProductName());
+            bin1.SetProductName("Changed Product");
+            Assert.AreEqual(bin2.GetProductName(), bin1.GetProductName());
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void flushTest()
         {
-            bin2.flush();
-            Assert.AreEqual(0, bin2.getCurrentVolume());
+            bin2.Flush();
+            Assert.AreEqual(0, bin2.GetCurrentVolume());
         }
 
         
@@ -125,7 +125,7 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void getBinNumberTest()
         {
-            Assert.AreEqual(1, bin1.getBinNumber());
+            Assert.AreEqual(1, bin1.GetBinNumber());
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void getProductNameTest()
         {
-            Assert.AreEqual("Test Product", bin1.getProductName());
+            Assert.AreEqual("Test Product", bin1.GetProductName());
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void getMaxVolumeTest()
         {
-            Assert.AreEqual(40, bin1.getMaxVolume());
+            Assert.AreEqual(40, bin1.GetMaxVolume());
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void getCurrentVolumeTest()
         {
-            Assert.AreEqual(20, bin2.getCurrentVolume());
+            Assert.AreEqual(20, bin2.GetCurrentVolume());
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace FoodStuffs_Control_System.src.Tests
         [TestMethod()]
         public void getVolumePercentageTest()
         {
-            Assert.AreEqual(50, bin2.getVolumePercentage());
+            Assert.AreEqual(50, bin2.GetVolumePercentage());
         }
     }
 }

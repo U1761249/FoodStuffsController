@@ -47,23 +47,23 @@ namespace FoodStuffsController
             Thread.CurrentThread.Name = "ControllerThread";
 
             // Get the instance for the FeedBinController.
-            controller = FeedBinController.getInstance();
+            controller = FeedBinController.GetInstance();
 
             // Run the updateValues() function when the bin list changes.
-            controller.BinListChangedEvent += updateValues;
+            controller.BinListChangedEvent += UpdateValues;
 
 
             // Define the controller for the interface.
             cgc = ControllerGuiController.getInstance();
 
             // Subscribe to events from the controller.
-            cgc.CurrentBinUpdate += updateValues;
+            cgc.CurrentBinUpdate += UpdateValues;
 
             binStrings = controller.StringBins();
             cbBin.DataSource = binStrings;
             cbBin.SelectedIndex = 0;
 
-            updateDisplay();
+            UpdateDisplay();
 
             automatedChange = false;
 
@@ -78,27 +78,27 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender">Required for events (Unused)</param>
         /// <param name="e">Required for events (Unused)</param>
-        private void updateValues(object sender = null, EventArgs e = null)
+        private void UpdateValues(object sender = null, EventArgs e = null)
         {
             try
             {
                 // Invoke the updateDisplay method to prevent cross-thread access to display properties.
-                tableLayoutPanel1.BeginInvoke(new InvokeDelegate(updateDisplay));
+                tableLayoutPanel1.BeginInvoke(new InvokeDelegate(UpdateDisplay));
             }
             catch (Exception err) { }
 
 
         }
 
-        private void updateDisplay()
+        private void UpdateDisplay()
         {
             //Set the text values for the product name and current volume.
-            this.lblProduct.Text = cgc.currentBin.getProductName();
-            this.lblStock.Text = $"{cgc.currentBin.getCurrentVolume()}mᶟ";
+            this.lblProduct.Text = cgc.currentBin.GetProductName();
+            this.lblStock.Text = $"{cgc.currentBin.GetCurrentVolume()}mᶟ";
 
             // Define the scale and progress of the progress bar to show how full the bin is.
-            pbCapacity.Maximum = Convert.ToInt32(cgc.currentBin.getMaxVolume());
-            pbCapacity.Value = Convert.ToInt32(cgc.currentBin.getCurrentVolume());
+            pbCapacity.Maximum = Convert.ToInt32(cgc.currentBin.GetMaxVolume());
+            pbCapacity.Value = Convert.ToInt32(cgc.currentBin.GetCurrentVolume());
 
 
             // Update the cbBins
@@ -129,12 +129,12 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cbBin_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbBin_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (automatedChange) return; // Ignore the change if it was performed by the software.
 
             // Update the current bin.
-            cgc.updateSelectedBin(cbBin.SelectedIndex);
+            cgc.UpdateSelectedBin(cbBin.SelectedIndex);
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnChange_Click(object sender, EventArgs e)
+        private void BtnChange_Click(object sender, EventArgs e)
         {
-            cgc.change();
+            cgc.Change();
         }
 
         /// <summary>
@@ -152,9 +152,9 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
-            cgc.add();
+            cgc.Add();
         }
 
         /// <summary>
@@ -162,9 +162,9 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
-            cgc.remove();
+            cgc.Remove();
         }
 
         /// <summary>
@@ -172,9 +172,9 @@ namespace FoodStuffsController
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnEmpty_Click(object sender, EventArgs e)
+        private void BtnEmpty_Click(object sender, EventArgs e)
         {
-            cgc.empty();
+            cgc.Empty();
         }
 
         /// <summary>

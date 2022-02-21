@@ -29,7 +29,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             return new KeyValuePair<string, double> ( recipe, quantity );
         }
 
-        private void tbQuantity_TextChanged(object sender, EventArgs e)
+        private void TbQuantity_TextChanged(object sender, EventArgs e)
         {
             try 
             {
@@ -44,7 +44,7 @@ namespace FoodStuffsController.gui.MessageBoxes
             }
         }
 
-        private void lbRecipes_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbRecipes_SelectedIndexChanged(object sender, EventArgs e)
         {
             recipe = lbRecipes.SelectedItem.ToString();
         }
