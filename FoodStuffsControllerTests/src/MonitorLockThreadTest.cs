@@ -11,7 +11,8 @@ namespace FoodStuffsControllerTests.src
     [TestClass()]
     public class MonitorLockThreadTest
     {
-        private readonly object _LOCKED = new object();
+        private readonly object _LOCK1 = new object();
+        private readonly object _LOCK2 = new object();
         private string concurrentString;
         string expected = "Thread 1Thread 1Thread 2Thread 2";
 
@@ -78,20 +79,42 @@ namespace FoodStuffsControllerTests.src
             Assert.AreEqual(expected, concurrentString);
         }
 
-            /// <summary>
-            /// Call method2 twice, with a 2 second gap.
-            /// Confirm that multiple threads cannot access the critical Method1 at the same time.
-            /// </summary>
-            private void ConcurrencyWithLockTest() 
+        /// <summary>
+        /// Test that multiple locks can be used simultaneously.
+        /// With Lock1 locked, Lock2 should still be accessible.
+        /// </summary>
+        [TestMethod()]
+        public void LockMultipleLocksTest()
         {
-            Monitor.Enter(_LOCKED);
+            concurrentString = "";
+
+            Thread t1 = new Thread(Method3);
+            t1.Name = "Thread 1";
+            t1.Start();
+
+            Thread t2 = new Thread(Method4);
+            t2.Name = "Thread 2";
+            t2.Start();
+
+            Thread.Sleep(10000);
+
+            Assert.AreNotEqual(expected, concurrentString);
+        }
+
+        /// <summary>
+        /// Call method2 twice, with a 2 second gap.
+        /// Confirm that multiple threads cannot access the critical Method1 at the same time.
+        /// </summary>
+        private void ConcurrencyWithLockTest() 
+        {
+            Monitor.Enter(_LOCK1);
             try 
             {
                 AddThreadNameToConcurrentString();
                 Thread.Sleep(2000);
                 AddThreadNameToConcurrentString();
             }
-            finally { Monitor.Exit(_LOCKED); }
+            finally { Monitor.Exit(_LOCK1); }
         }
 
         /// <summary>
@@ -116,25 +139,49 @@ namespace FoodStuffsControllerTests.src
 
         private void Method1() 
         {
-            Monitor.Enter(_LOCKED);
+            Monitor.Enter(_LOCK1);
             try
             {
                 AddThreadNameToConcurrentString();
                 Thread.Sleep(2000);
                 AddThreadNameToConcurrentString();
             }
-            finally { Monitor.Exit(_LOCKED); }
+            finally { Monitor.Exit(_LOCK1); }
         }
         private void Method2() 
         {
-            Monitor.Enter(_LOCKED);
+            Monitor.Enter(_LOCK1);
             try
             {
                 AddThreadNameToConcurrentString();
                 Thread.Sleep(2000);
                 AddThreadNameToConcurrentString();
             }
-            finally { Monitor.Exit(_LOCKED); }
+            finally { Monitor.Exit(_LOCK1); }
+        }
+
+        private void Method3()
+        {
+            Monitor.Enter(_LOCK1);
+            try
+            {
+                AddThreadNameToConcurrentString();
+                Thread.Sleep(2000);
+                AddThreadNameToConcurrentString();
+            }
+            finally { Monitor.Exit(_LOCK1); }
+        }
+
+        private void Method4()
+        {
+            Monitor.Enter(_LOCK2);
+            try
+            {
+                AddThreadNameToConcurrentString();
+                Thread.Sleep(2000);
+                AddThreadNameToConcurrentString();
+            }
+            finally { Monitor.Exit(_LOCK2); }
         }
     }
 }
