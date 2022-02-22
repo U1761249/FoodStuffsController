@@ -39,7 +39,7 @@ namespace FoodStuffsController.src
 
             bins = new List<FeedBin>();
             recipes = new List<Recipe>();
-            
+
             // Pull from the database if it is required.
             // ONLY FALSE DURING TESTING.
             if (databasePull)
@@ -416,7 +416,7 @@ namespace FoodStuffsController.src
                         }
                         else
                         {
-                            message = $"The batch size is limited to {maxBatch} by the availability of {ri.GetIngredientName()}";
+                            message = $"The batch size is limited to {string.Format("{0:N2}%", maxBatch)} by the availability of {ri.GetIngredientName()}";
                         }
                     }
                 }
