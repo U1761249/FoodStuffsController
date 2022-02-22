@@ -29,9 +29,15 @@ namespace FoodStuffsController.controllers
             controller = FeedBinController.GetInstance();
         }
 
+        /// <summary>
+        /// Get information about the recipes in the list in the form of a DataTable.
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetRecipeDataTable() { return controller.GetRecipeDataTable(); }
 
-
+        /// <summary>
+        /// Define a new recipe.
+        /// </summary>
         public void NewRecipe()
         {
             Recipe r = new Recipe();
@@ -41,6 +47,9 @@ namespace FoodStuffsController.controllers
             }
         }
 
+        /// <summary>
+        /// Make a batch.
+        /// </summary>
         public void Batch()
         {
             KeyValuePair<string, double> batchInfo = new KeyValuePair<string, double>("", 0);

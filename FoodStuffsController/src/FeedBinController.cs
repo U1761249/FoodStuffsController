@@ -93,6 +93,7 @@ namespace FoodStuffsController.src
             }
             finally { Monitor.Exit(_LOCKED); }
         }
+
         /// <summary>
         /// Populate the recipes with initial values.
         /// </summary>
@@ -155,6 +156,10 @@ namespace FoodStuffsController.src
             finally { Monitor.Exit(_LOCKED); }
         }
 
+        /// <summary>
+        /// Add a recipe to the recipes list and subscribe to its events.
+        /// </summary>
+        /// <param name="recipe"></param>
         private void AddRecipe(Recipe recipe)
         {
             Monitor.Enter(_LOCKED);
@@ -166,6 +171,10 @@ namespace FoodStuffsController.src
             finally { Monitor.Exit(_LOCKED); }
         }
 
+        /// <summary>
+        /// Add a new recipe to the database and update the recipe list.
+        /// </summary>
+        /// <param name="recipe"></param>
         public void AddNewRecipe(Recipe recipe)
         {
             string addRecipeQuery = $"INSERT INTO recipe (productName) VALUES ('{recipe.getRecipeName()}');";
@@ -207,6 +216,11 @@ namespace FoodStuffsController.src
             BinListChangedEvent(this, null);
         }
 
+        /// <summary>
+        /// Trigger the RecipeListChangedEvent when a recipe variable changes. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RecipeVariableChanged(object sender = null, EventArgs e = null)
         {
             RecipeListChangedEvent(this, null);
@@ -216,6 +230,10 @@ namespace FoodStuffsController.src
         //___________________________________________________
         // Define class functionalty.
 
+        /// <summary>
+        /// Perform a series of database SQL queries to update the database for the provided bin.
+        /// </summary>
+        /// <param name="bin"></param>
         private void UpdateDatabase(FeedBin bin)
         {
             string hasProductQuery = $"SELECT * FROM products WHERE prodName = '{bin.GetProductName()}'";
@@ -291,6 +309,10 @@ namespace FoodStuffsController.src
 
         public List<Recipe> GetRecipes() { return recipes; }
 
+        /// <summary>
+        /// Override the recipes list with a new list.
+        /// </summary>
+        /// <param name="newRecipes"></param>
         public void SetRecipse(List<Recipe> newRecipes)
         {
             Monitor.Enter(_LOCKED);
@@ -302,6 +324,10 @@ namespace FoodStuffsController.src
             finally { Monitor.Exit(_LOCKED); }
         }
 
+        /// <summary>
+        /// Get a list of all recipe names.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetRecipeList()
         {
             Monitor.Enter(_LOCKED);
@@ -357,6 +383,10 @@ namespace FoodStuffsController.src
             finally { Monitor.Exit(_LOCKED); }
         }
 
+        /// <summary>
+        /// Get information about the recipes in a data table.
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetRecipeDataTable()
         {
             Monitor.Enter(_LOCKED);
@@ -388,6 +418,12 @@ namespace FoodStuffsController.src
             finally { Monitor.Exit(_LOCKED); }
         }
 
+        /// <summary>
+        /// Calculate the largest possible batch of a recipe given the current contents of the bins.
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private double GetMaxBatch(Recipe recipe, ref string message)
         {
             Monitor.Enter(_LOCKED);

@@ -56,6 +56,10 @@ namespace FoodStuffsController.controllers
             _currentBin = controller.GetBins()[0];
         }
 
+        /// <summary>
+        /// Set the bin at the selected index as the current bin.
+        /// </summary>
+        /// <param name="index"></param>
         public void UpdateSelectedBin(int index)
         {
             currentBin = controller.GetBins()[index];
